@@ -50,7 +50,7 @@ p {
 .btn {
   display: inline-block;
   padding: 14px 26px;
-  background: linear-gradient(135deg, #065f46, #2563eb); /* green → blue */
+  background: linear-gradient(135deg, #14532d, #1d4ed8); /* deeper green + blue */
   color: white;
   text-decoration: none;
   border-radius: 12px;
