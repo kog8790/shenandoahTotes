@@ -94,7 +94,10 @@ p {
   transform: translateY(-4px);
 }
 
-/* HERO LOGO */
+.hero {
+  margin-bottom: 20px;
+}
+
 .logo {
   max-width: 260px;
   margin-bottom: 20px;
