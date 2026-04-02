@@ -99,8 +99,10 @@ p {
 }
 
 .logo {
-  max-width: 260px;
-  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin-bottom: 20px
 }
 
 /* FOOTER */
