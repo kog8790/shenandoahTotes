@@ -95,7 +95,11 @@ p {
 }
 
 .hero {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* keeps text below centered too */
+  text-align: center;
 }
 
 .logo {
