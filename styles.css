@@ -20,16 +20,28 @@ body {
   text-align: center;
 }
 
-/* HERO */
+/* HERO WRAPPER */
 .hero {
   display: flex;
   justify-content: center;
-  padding: 10px 0 20px;
+  align-items: center;
+  overflow: hidden; /* allows clean cropping */
+  padding: 10px 0;
 }
 
-/* 🔥 LOGO (THIS IS THE IMPORTANT PART) */
+/* LOGO BASE (DESKTOP DEFAULT) */
 .logo {
   display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+
+  /* 🔥 auto-crop effect */
+  transform: scale(1.08) translateX(10px);
+
+  /* smoother rendering */
+  object-fit: contain;
+}
 
   /* prevents stretching */
   width: auto;
@@ -125,8 +137,8 @@ footer {
 @media (max-width: 600px) {
   .logo {
     max-width: 85%;   /* instead of full width */
-    transform: translateX(20px); /* slight visual correction */
+    transform: translateX(8px); /* slight visual correction */
   }
 }
 
-transform: translateX(8px);
+transform: translateX(12px);
