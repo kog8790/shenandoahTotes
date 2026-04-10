@@ -10,10 +10,9 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   background: linear-gradient(to bottom, #f8fafc, #ffffff);
   color: #0f172a;
-  line-height: 1.6;
 }
 
-/* CONTAINER (controls ALL centering) */
+/* PAGE CENTERING */
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -21,32 +20,45 @@ body {
   text-align: center;
 }
 
-/* LOGO SECTION */
+/* HERO */
 .hero {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 20px;
 }
 
+/* 🔥 LOGO (THIS IS THE IMPORTANT PART) */
 .logo {
   display: block;
-  margin: 0 auto;
+
+  /* prevents stretching */
+  width: auto;
+
+  /* controls size */
   max-width: 420px;
-  width: 100%;
+
   height: auto;
+
+  /* true centering */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* 👇 visual correction for mountain center */
+  transform: translateX(12px);
 }
 
 /* DIVIDER */
 hr {
-  border: none;
   height: 6px;
   background: black;
+  border: none;
   margin: 20px auto;
   width: 100%;
 }
 
-/* TYPOGRAPHY */
+/* TEXT */
 h1 {
   font-size: 2.5rem;
-  font-weight: 800;
   margin-bottom: 10px;
 }
 
@@ -57,7 +69,6 @@ h2 {
 
 h3 {
   font-size: 1.1rem;
-  margin-bottom: 8px;
 }
 
 p {
@@ -77,11 +88,6 @@ p {
   text-decoration: none;
   border-radius: 10px;
   font-weight: 600;
-  transition: 0.2s ease;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
 }
 
 /* SECTIONS */
@@ -89,7 +95,7 @@ p {
   margin-top: 60px;
 }
 
-/* FEATURES GRID */
+/* FEATURES */
 .features {
   display: grid;
   gap: 20px;
