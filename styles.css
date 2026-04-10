@@ -120,6 +120,7 @@ body {
 .logo {
   display: block;
   margin: 0 auto;
-  max-width: 500px;   /* increase or decrease as needed */
+  max-width: 500px;
   width: 100%;
   height: auto;
+}
