@@ -15,9 +15,9 @@ body {
 
 /* CONTAINER (centers page content) */
 .container {
-  max-width: 1000px;
+  max-width: auto;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 0px 0px;
   text-align: center;
 }
 
