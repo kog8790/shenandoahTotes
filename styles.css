@@ -37,7 +37,7 @@ body {
   max-width: auto;
   height: auto;
   margin: 0 auto;
-
+  padding: 0px 0;
   object-fit: contain;
 }
 
