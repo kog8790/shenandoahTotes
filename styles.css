@@ -114,3 +114,10 @@ footer {
   font-size: 0.9rem;
   color: #64748b;
 }
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
