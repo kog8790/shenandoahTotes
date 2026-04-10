@@ -90,15 +90,11 @@ p {
   transition: 0.2s ease;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-}
-
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  padding: 20px 0; /* reduce vertical space */
   
   width: 100%;
   margin: 0 auto;
@@ -131,8 +127,6 @@ main {
 .logo {
   display: block;
   margin: 0 auto;
-  max-width: 400px;
+  max-width: 500px;   /* increase or decrease as needed */
+  width: 100%;
   height: auto;
-}
-.logo {
-  border: 2px solid red;
