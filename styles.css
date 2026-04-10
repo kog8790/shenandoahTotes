@@ -124,3 +124,9 @@ body {
   width: 100%;
   height: auto;
 }
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 50px 20px;
+  text-align: center;
+}
