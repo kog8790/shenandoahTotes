@@ -13,28 +13,50 @@ body {
   line-height: 1.6;
 }
 
-/* LAYOUT */
+/* CONTAINER (controls ALL centering) */
 .container {
   max-width: 1000px;
-  margin: auto;
-  padding: 50px 20px;
+  margin: 0 auto;
+  padding: 40px 20px;
   text-align: center;
+}
+
+/* LOGO SECTION */
+.hero {
+  margin-bottom: 20px;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto;
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+}
+
+/* DIVIDER */
+hr {
+  border: none;
+  height: 6px;
+  background: black;
+  margin: 20px auto;
+  width: 100%;
 }
 
 /* TYPOGRAPHY */
 h1 {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 10px;
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 8px;
 }
 
@@ -44,28 +66,27 @@ p {
 
 /* CTA */
 .cta {
-  margin-top: 30px;
+  margin-top: 25px;
 }
 
 .btn {
   display: inline-block;
-  padding: 14px 26px;
-  background: linear-gradient(135deg, #14532d, #1d4ed8); /* deeper green + blue */
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #14532d, #1d4ed8);
   color: white;
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 600;
   transition: 0.2s ease;
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 /* SECTIONS */
 .section {
-  margin-top: 70px;
+  margin-top: 60px;
 }
 
 /* FEATURES GRID */
@@ -84,49 +105,14 @@ p {
 /* CARDS */
 .card {
   background: white;
-  padding: 25px;
-  border-radius: 16px;
+  padding: 20px;
+  border-radius: 14px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: 0.2s ease;
-}
-
-.hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  
-  width: 100%;
-  margin: 0 auto;
-
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* FOOTER */
 footer {
-  margin-top: 70px;
+  margin-top: 60px;
   font-size: 0.9rem;
   color: #64748b;
-}
-body {
-  margin: 0;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto;
-  max-width: 500px;
-  width: 100%;
-  height: auto;
-}
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 50px 20px;
-  text-align: center;
 }
