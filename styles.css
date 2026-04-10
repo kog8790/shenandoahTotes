@@ -23,11 +23,10 @@ body {
 
 /* HERO (logo wrapper) */
 .hero {
-  display: auto;
-  justify-content: center;
+  display: flex;
   align-items: center;
-  overflow: hidden; /* enables crop effect */
-  padding: 0px 0;
+  height: 250px; /* adjust to taste */
+}
 }
 
 /* LOGO (DESKTOP DEFAULT) */
