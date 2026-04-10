@@ -10,9 +10,10 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   background: linear-gradient(to bottom, #f8fafc, #ffffff);
   color: #0f172a;
+  line-height: 1.6;
 }
 
-/* PAGE CENTERING */
+/* CONTAINER (centers page content) */
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -20,57 +21,41 @@ body {
   text-align: center;
 }
 
-/* HERO WRAPPER */
+/* HERO (logo wrapper) */
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* allows clean cropping */
+  overflow: hidden; /* enables crop effect */
   padding: 10px 0;
 }
 
-/* LOGO BASE (DESKTOP DEFAULT) */
+/* LOGO (DESKTOP DEFAULT) */
 .logo {
   display: block;
   width: 100%;
   max-width: 420px;
   height: auto;
 
-  /* 🔥 auto-crop effect */
+  /* 🔥 crop + visual centering */
   transform: scale(1.08) translateX(10px);
 
-  /* smoother rendering */
   object-fit: contain;
-}
-
-  /* prevents stretching */
-  width: auto;
-
-  /* controls size */
-  max-width: 420px;
-
-  height: auto;
-
-  /* true centering */
-  margin-left: auto;
-  margin-right: auto;
-
-  /* 👇 visual correction for mountain center */
-  transform: translateX(12px);
 }
 
 /* DIVIDER */
 hr {
+  border: none;
   height: 6px;
   background: black;
-  border: none;
   margin: 20px auto;
   width: 100%;
 }
 
-/* TEXT */
+/* TYPOGRAPHY */
 h1 {
   font-size: 2.5rem;
+  font-weight: 800;
   margin-bottom: 10px;
 }
 
@@ -81,6 +66,7 @@ h2 {
 
 h3 {
   font-size: 1.1rem;
+  margin-bottom: 8px;
 }
 
 p {
@@ -100,6 +86,11 @@ p {
   text-decoration: none;
   border-radius: 10px;
   font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
 }
 
 /* SECTIONS */
@@ -107,7 +98,7 @@ p {
   margin-top: 60px;
 }
 
-/* FEATURES */
+/* FEATURES GRID */
 .features {
   display: grid;
   gap: 20px;
@@ -134,11 +125,29 @@ footer {
   font-size: 0.9rem;
   color: #64748b;
 }
+
+/* 📱 MOBILE */
 @media (max-width: 600px) {
   .logo {
-    max-width: 85%;   /* instead of full width */
-    transform: translateX(8px); /* slight visual correction */
+    max-width: 320px;
+
+    /* tighter crop + center */
+    transform: scale(1.12) translateX(6px);
+  }
+
+  .hero {
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
   }
 }
 
-transform: translateX(12px);
+/* 📲 TABLET */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .logo {
+    max-width: 380px;
+    transform: scale(1.1) translateX(8px);
+  }
+}
