@@ -32,13 +32,11 @@ body {
 
 /* LOGO (DESKTOP DEFAULT) */
 .logo {
-  display: auto;
-  width: 100%;
+  display: block;
+  width: 90%;
   max-width: 420px;
   height: auto;
-
-  /* 🔥 crop + visual centering */
-  transform: scale(1.08) translateX(10px);
+  margin: 0 auto;
 
   object-fit: contain;
 }
