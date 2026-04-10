@@ -33,8 +33,8 @@ body {
 /* LOGO (DESKTOP DEFAULT) */
 .logo {
   display: block;
-  width: 90%;
-  max-width: 420px;
+  width: auto;
+  max-width: auto;
   height: auto;
   margin: 0 auto;
 
