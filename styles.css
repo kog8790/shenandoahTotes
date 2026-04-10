@@ -134,3 +134,5 @@ main {
   max-width: 400px;
   height: auto;
 }
+.logo {
+  border: 2px solid red;
