@@ -126,3 +126,6 @@ body {
 main {
   max-width: 900px;
   margin: 0 auto;
+
+  .logo {
+  transform: translateX(10px); /* adjust until it looks centered */
