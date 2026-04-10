@@ -122,3 +122,11 @@ footer {
   font-size: 0.9rem;
   color: #64748b;
 }
+@media (max-width: 600px) {
+  .logo {
+    max-width: 85%;   /* instead of full width */
+    transform: translateX(8px); /* slight visual correction */
+  }
+}
+
+transform: translateX(8px);
