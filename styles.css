@@ -94,13 +94,11 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0; /* reduce vertical space */
+  padding: 20px 0;
   
   width: 100%;
   margin: 0 auto;
 
-  max-width: 900px;
-  margin: 0 auto;
 }
 
 .logo-container {
@@ -117,11 +115,6 @@ footer {
 }
 body {
   margin: 0;
-}
-
-main {
-  max-width: 900px;
-  margin: 0 auto;
 }
 
 .logo {
