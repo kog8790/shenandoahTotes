@@ -33,12 +33,12 @@ body {
 /* LOGO (DESKTOP DEFAULT) */
 .logo {
   display: block;
-  width: auto;
-  max-width: auto;
+
+  width: 100%;         
+  max-width: 380px;    
+
   height: auto;
   margin: 0 auto;
-  padding: 0px 0;
-  object-fit: contain;
 }
 
 /* DIVIDER */
