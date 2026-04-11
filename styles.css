@@ -25,7 +25,8 @@ body {
 .hero {
   display: flex;
   align-items: center;
-  height: 250px; /* adjust to taste */
+  height: 250px; 
+  padding-bottom: flex;
 }
 }
 
