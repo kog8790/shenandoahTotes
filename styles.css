@@ -23,17 +23,16 @@ body {
 
 /* HERO (logo wrapper) */
 .hero {
+  .hero {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 40px 0 20px;
+  overflow: hidden;
 }
 
 /* LOGO (DESKTOP DEFAULT) */
 .logo {
   width: 100%;
-  max-width: 380px;
   height: auto;
+  display: block;
 }
 
 /* DIVIDER */
