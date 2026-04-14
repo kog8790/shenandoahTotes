@@ -24,14 +24,14 @@ body {
 /* HERO (logo wrapper) */
 .hero {
   width: 100%;
-  aspect-ratio: 16 / 5; /* 👈 controls shape across ALL screens */
-  
+  aspect-ratio: 16 / 5;
+
   background-image: url('/logo.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  overflow: hidden;
+  margin-bottom: 40px; /* 👈 THIS FIXES OVERLAP */
 }
 
 /* LOGO (DESKTOP DEFAULT) */
