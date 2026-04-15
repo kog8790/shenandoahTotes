@@ -172,6 +172,11 @@ p {
   width: 100%;
 }
 
+.package-bottom {
+  margin-top: 20px;
+  text-align: center;
+}
+
 /* BUILD YOUR OWN */
 .build-section {
   margin-top: 70px;
