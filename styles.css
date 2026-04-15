@@ -131,6 +131,9 @@ p {
 }
 
 .package-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: white;
   padding: 28px 22px;
   border-radius: 16px;
