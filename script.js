@@ -18,3 +18,31 @@ async function createBooking(data) {
 
   return await response.json();
 }
+
+// ===== Button Actions =====
+document.getElementById("lightMoveBtn").addEventListener("click", () => {
+  document.getElementById("classicTotes").value = 10;
+  document.getElementById("wheeledTotes").value = 1;
+  document.getElementById("dollies").value = 0;
+  document.getElementById("mattressBags").value = 1;
+
+  document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("familyMoveBtn").addEventListener("click", () => {
+  document.getElementById("classicTotes").value = 20;
+  document.getElementById("wheeledTotes").value = 2;
+  document.getElementById("dollies").value = 1;
+  document.getElementById("mattressBags").value = 2;
+
+  document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("fullMoveBtn").addEventListener("click", () => {
+  document.getElementById("classicTotes").value = 30;
+  document.getElementById("wheeledTotes").value = 4;
+  document.getElementById("dollies").value = 1;
+  document.getElementById("mattressBags").value = 4;
+
+  document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+});
