@@ -56,3 +56,51 @@ document.getElementById("fullMoveBtn").addEventListener("click", () => {
 
   document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
 });
+
+// ===== Submit Logic =====
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // ===== CUSTOMER INFO =====
+    const name = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const start = document.getElementById("startDate").value;
+    const end = document.getElementById("endDate").value;
+
+    // ===== CREATE RESERVATION =====
+    const reservation = await createReservation({
+      "Customer Name": name,
+      "Email": email,
+      "Phone": phone,
+      "Start Date": start,
+      "End Date": end
+    });
+
+    const reservationId = reservation.id;
+
+    // ===== ITEMS =====
+    const items = [
+      { name: "Classic Tote", qty: Number(document.getElementById("classicTotes").value) },
+      { name: "Wheeled Tote", qty: Number(document.getElementById("wheeledTotes").value) },
+      { name: "Dolly", qty: Number(document.getElementById("dollies").value) },
+      { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) }
+    ];
+
+    // ===== CREATE BOOKINGS =====
+    for (let item of items) {
+      if (item.qty > 0) {
+        await createBooking({
+          "Tote Type": [toteMap[item.name]],
+          "Number Reserved": item.qty,
+          "Start Date Time": start,
+          "End Date Time": end,
+          "Reservation": [reservationId]
+        });
+      }
+    }
+
+    alert("Reservation submitted!");
+  });
+});
