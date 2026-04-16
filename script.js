@@ -19,6 +19,16 @@ async function createBooking(data) {
   return await response.json();
 }
 
+async function createReservation(data) {
+  const res = await fetch("/.netlify/functions/create-reservation", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  return await res.json();
+}
+
 // ===== Button Actions =====
 document.getElementById("lightMoveBtn").addEventListener("click", () => {
   document.getElementById("classicTotes").value = 10;
