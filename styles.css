@@ -13,7 +13,7 @@ body {
   line-height: 1.6;
 }
 
-/* CONTAINER (centers page content) */
+/* CONTAINER */
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -21,22 +21,22 @@ body {
   text-align: center;
 }
 
-/* HERO (logo wrapper) */
+/* HERO (FIXED) */
 .hero {
-  background-image: url('/logo-desktop.png');
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
 
-@media (max-width: 600px) {
-  .hero {
-    background-image: url('/logo-mobile.png');
-  }
-}
-
-/* LOGO (DESKTOP DEFAULT) */
+/* LOGO (FIXED) */
 .logo {
   width: 100%;
+  max-width: 600px;
   height: auto;
   display: block;
+  margin: 0 auto;
 }
 
 /* DIVIDER */
@@ -96,7 +96,7 @@ p {
   margin-top: 60px;
 }
 
-/* FEATURES GRID */
+/* FEATURES */
 .features {
   display: grid;
   gap: 20px;
@@ -176,7 +176,7 @@ p {
   margin-top: 10px;
   font-size: 1.4rem;
   font-weight: 800;
-  color: #1d4ed8; /* matches your blue theme */
+  color: #1d4ed8;
   letter-spacing: 0.5px;
 }
 
@@ -295,17 +295,18 @@ footer {
   font-size: 0.9rem;
   color: #64748b;
 }
+
 .version {
   font-size: 0.7rem;
   color: #cbd5e1;
   margin-top: 10px;
 }
 
-/* 📱 MOBILE */
+/* MOBILE */
 @media (max-width: 600px) {
   .logo {
     max-width: 320px;
-    transform: scale(1.12) translateX(6px);
+    transform: scale(1.05); /* FIXED (removed sideways shift) */
   }
 
   .hero {
@@ -321,10 +322,10 @@ footer {
   }
 }
 
-/* 📲 TABLET */
+/* TABLET */
 @media (min-width: 601px) and (max-width: 1024px) {
   .logo {
     max-width: 380px;
-    transform: scale(1.1) translateX(8px);
+    transform: scale(1.05);
   }
 }
