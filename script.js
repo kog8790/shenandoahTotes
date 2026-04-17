@@ -68,14 +68,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const phone = document.getElementById("phone").value;
     const start = document.getElementById("startDate").value;
     const end = document.getElementById("endDate").value;
+    const POA = document.getElementById("pickupAddress").value;
+    const DOA = document.getElementById("dropoffAddress").value;
+    const notes = document.getElementById("notes").value;
 
     // ===== CREATE RESERVATION =====
     const reservation = await createReservation({
       "Customer Name": name,
       "Email": email,
       "Phone": phone,
-      "Start Date": start,
-      "End Date": end
+      "Drop Off Address": DOA,
+      "Pick Up Address": POA,
+      "Notes": notes,
     });
 
     console.log("reservation response:", reservation);
