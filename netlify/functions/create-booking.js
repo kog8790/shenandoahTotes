@@ -18,7 +18,5 @@ export async function handler(event) {
   return {
     statusCode: response.status,
     body: JSON.stringify(result)
-
-  console.log("booking response:", item.name, booking);
   };
 }
