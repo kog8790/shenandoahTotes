@@ -10,15 +10,13 @@ export async function handler(event) {
       "Authorization": `Bearer ${AIRTABLE_TOKEN}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      fields: data
-    })
+    body: JSON.stringify({ fields: data })
   });
 
   const result = await response.json();
 
   return {
-    statusCode: 200,
+    statusCode: response.status,
     body: JSON.stringify(result)
   };
 }
