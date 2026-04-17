@@ -78,6 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "End Date": end
     });
 
+    console.log("reservation response:", reservation);
+
     const reservationId = reservation.id;
 
     // ===== ITEMS =====
@@ -88,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) }
     ];
 
-    // ===== CREATE BOOKINGS =====
+    // ===== CREATE BOOKINGS & RESERVATION =====
     for (let item of items) {
       if (item.qty > 0) {
         await createBooking({
@@ -98,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "End Date Time": end,
           "Reservation": [reservationId]
         });
+        console.log("booking response:", item.name, booking);
       }
     }
 
