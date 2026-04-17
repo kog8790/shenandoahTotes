@@ -1,6 +1,6 @@
 // ===== CONFIG =====
 const toteMap = {
-  "Classic Tote": "recOKV978UHpmWQj",
+  "Classic Tote": "recmOKV978UHpmWQj",
   "Wheeled Tote": "recQJIrDosM8nbILD",
   "Dolly": "recNf9ULXY9Glf0nk",
   "Mattress Bag": "recJabXU9XtVUtcgz"
