@@ -17,7 +17,7 @@ export async function handler(event) {
   const result = await response.json();
 
   return {
-    statusCode: 200,
+    statusCode: response.status,
     body: JSON.stringify(result)
   };
 }
