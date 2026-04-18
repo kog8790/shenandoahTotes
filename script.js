@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "Number Reserved": item.qty,
             "Start Date Time": start,
             "End Date Time": end,
-            "Reservation ID": [reservationId] // ✅ FIXED
+            "Reservation ID": [reservationId]
           });
 
           console.log("booking response:", item.name, booking);
