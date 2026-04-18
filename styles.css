@@ -21,7 +21,7 @@ body {
   text-align: center;
 }
 
-/* HERO (FIXED) */
+/* HERO */
 .hero {
   width: 100%;
   display: flex;
@@ -30,10 +30,10 @@ body {
   padding: 10px 0;
 }
 
-/* LOGO (FIXED) */
+/* LOGO (UPDATED) */
 .logo {
   width: 100%;
-  max-width: 600px;
+  max-width: 900px; /* 🔥 increased from 600px */
   height: auto;
   display: block;
   margin: 0 auto;
@@ -235,11 +235,6 @@ p {
   background: white;
 }
 
-.build-cta {
-  margin-top: 25px;
-  text-align: center;
-}
-
 /* CUSTOMER FORM */
 .customer-form-wrapper {
   margin-top: 70px;
@@ -248,11 +243,6 @@ p {
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   text-align: left;
-}
-
-.customer-form-wrapper h2,
-.customer-form-wrapper p {
-  text-align: center;
 }
 
 .customer-form {
@@ -267,28 +257,6 @@ p {
   }
 }
 
-.customer-form .full-width {
-  grid-column: 1 / -1;
-}
-
-.customer-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #0f172a;
-}
-
-.customer-form textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-.form-actions {
-  grid-column: 1 / -1;
-  text-align: center;
-  margin-top: 10px;
-}
-
 /* FOOTER */
 footer {
   margin-top: 60px;
@@ -296,17 +264,11 @@ footer {
   color: #64748b;
 }
 
-.version {
-  font-size: 0.7rem;
-  color: #cbd5e1;
-  margin-top: 10px;
-}
-
 /* MOBILE */
 @media (max-width: 600px) {
   .logo {
     max-width: 320px;
-    transform: scale(1.05); /* FIXED (removed sideways shift) */
+    transform: scale(1.05);
   }
 
   .hero {
@@ -325,12 +287,18 @@ footer {
 /* TABLET */
 @media (min-width: 601px) and (max-width: 1024px) {
   .logo {
-    max-width: 380px;
+    max-width: 500px;
     transform: scale(1.05);
   }
 }
+
+/* 🔥 DESKTOP HERO BOOST (THIS IS THE NEW PART) */
 @media (min-width: 1024px) {
+  .hero {
+    padding: 40px 0 20px;
+  }
+
   .logo {
-    max-width: 1000px; /* increase this as needed */
+    max-width: 1100px;
   }
 }
