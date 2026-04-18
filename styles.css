@@ -329,3 +329,8 @@ footer {
     transform: scale(1.05);
   }
 }
+@media (min-width: 1024px) {
+  .logo {
+    max-width: 1000px; /* increase this as needed */
+  }
+}
