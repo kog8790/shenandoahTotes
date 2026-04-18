@@ -29,36 +29,38 @@ async function createReservation(data) {
   return await res.json();
 }
 
-// ===== Button Actions =====
-document.getElementById("lightMoveBtn").addEventListener("click", () => {
-  document.getElementById("classicTotes").value = 10;
-  document.getElementById("wheeledTotes").value = 1;
-  document.getElementById("dollies").value = 0;
-  document.getElementById("mattressBags").value = 1;
-
-  document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
-});
-
-document.getElementById("familyMoveBtn").addEventListener("click", () => {
-  document.getElementById("classicTotes").value = 20;
-  document.getElementById("wheeledTotes").value = 2;
-  document.getElementById("dollies").value = 1;
-  document.getElementById("mattressBags").value = 2;
-
-  document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
-});
-
-document.getElementById("fullMoveBtn").addEventListener("click", () => {
-  document.getElementById("classicTotes").value = 30;
-  document.getElementById("wheeledTotes").value = 4;
-  document.getElementById("dollies").value = 1;
-  document.getElementById("mattressBags").value = 4;
-
-  document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
-});
-
-// ===== Submit Logic =====
+// ===== MAIN =====
 document.addEventListener("DOMContentLoaded", () => {
+
+  // ===== Button Actions =====
+  document.getElementById("lightMoveBtn").addEventListener("click", () => {
+    document.getElementById("classicTotes").value = 10;
+    document.getElementById("wheeledTotes").value = 1;
+    document.getElementById("dollies").value = 0;
+    document.getElementById("mattressBags").value = 1;
+
+    document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+  });
+
+  document.getElementById("familyMoveBtn").addEventListener("click", () => {
+    document.getElementById("classicTotes").value = 20;
+    document.getElementById("wheeledTotes").value = 2;
+    document.getElementById("dollies").value = 1;
+    document.getElementById("mattressBags").value = 2;
+
+    document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+  });
+
+  document.getElementById("fullMoveBtn").addEventListener("click", () => {
+    document.getElementById("classicTotes").value = 30;
+    document.getElementById("wheeledTotes").value = 4;
+    document.getElementById("dollies").value = 1;
+    document.getElementById("mattressBags").value = 4;
+
+    document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+  });
+
+  // ===== Submit Logic =====
   document.getElementById("bookingForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -79,12 +81,19 @@ document.addEventListener("DOMContentLoaded", () => {
       "Phone": phone,
       "Drop Off Address": DOA,
       "Pick Up Address": POA,
-      "Notes": notes,
+      "Notes": notes
     });
 
     console.log("reservation response:", reservation);
 
     const reservationId = reservation.id;
+
+    // Guard
+    if (!reservationId) {
+      alert("Reservation failed. Check console.");
+      console.error("Invalid reservation response:", reservation);
+      return;
+    }
 
     // ===== ITEMS =====
     const items = [
@@ -94,20 +103,35 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) }
     ];
 
-    // ===== CREATE BOOKINGS & RESERVATION =====
+    // ===== CREATE BOOKINGS =====
+    let successCount = 0;
+
     for (let item of items) {
       if (item.qty > 0) {
-        await createBooking({
-          "Tote Type": [toteMap[item.name]],
-          "Number Reserved": item.qty,
-          "Start Date Time": start,
-          "End Date Time": end,
-          "Reservation ID": [reservationId]
-        });
-        console.log("booking response:", item.name, booking);
+        try {
+          const booking = await createBooking({
+            "Tote Type": [toteMap[item.name]],
+            "Number Reserved": item.qty,
+            "Start Date Time": start,
+            "End Date Time": end,
+            "Reservation ID": [reservationId] // ✅ FIXED
+          });
+
+          console.log("booking response:", item.name, booking);
+          successCount++;
+
+        } catch (err) {
+          console.error("booking failed:", item.name, err);
+        }
       }
     }
 
-    alert("Reservation submitted!");
+    // ===== RESULT =====
+    if (successCount > 0) {
+      alert("Reservation submitted!");
+    } else {
+      alert("Something went wrong. No bookings were created.");
+    }
   });
+
 });
