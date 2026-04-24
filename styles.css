@@ -314,49 +314,5 @@ footer {
     width: 100%;
   }
 }
-.waiver-box {
-  margin-top: 20px;
-  padding: 16px;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  background: #f8fafc;
-}
 
-.waiver-title {
-  font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 6px;
-  color: #0f172a;
-}
 
-.waiver-text {
-  font-size: 14px;
-  margin-bottom: 12px;
-  color: #475569;
-}
-
-.waiver-link {
-  display: inline-block;
-  font-weight: 600;
-  font-size: 15px;
-  color: #2563eb;
-  text-decoration: underline;
-  margin-bottom: 12px;
-}
-
-.waiver-link:hover {
-  color: #1d4ed8;
-}
-
-.waiver-checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 14px;
-}
-
-.waiver-checkbox input {
-  margin-top: 3px;
-  transform: scale(1.2);
-  cursor: pointer;
-}
