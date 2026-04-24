@@ -303,12 +303,14 @@ footer {
   }
 }
 @media (max-width: 768px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
   .item-row {
     width: 100%;
-    margin-left: 0 !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .item-row input,
+  .item-row select {
+    width: 100%;
   }
 }
