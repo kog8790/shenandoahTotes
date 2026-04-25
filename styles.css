@@ -314,5 +314,15 @@ footer {
     width: 100%;
   }
 }
+.form-actions {
 
+  grid-column: 1 / -1; /* spans full width of grid */
+
+  display: flex;
+
+  justify-content: center;
+
+  margin-top: 20px;
+
+}
 
