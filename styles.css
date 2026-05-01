@@ -378,3 +378,8 @@ footer {
   margin-bottom: 12px;
 
 }
+#paypal-button-container {
+
+  min-height: 45px;
+
+}
