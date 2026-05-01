@@ -9,107 +9,143 @@
   
 <body>
 
+  <!-- HERO (FULL WIDTH) -->
   <div class="hero">
     <img src="logo.png" class="logo" alt="Shenandoah Tote Rental Logo">
   </div>
 
   <hr>
 
+  <!-- MAIN CONTENT -->
   <div class="container">
 
+    <!-- HEADER -->
     <h1>Shenandoah Tote Rental</h1>
     <p>A cleaner, easier way to move in the Shenandoah Valley.</p>
 
-    <!-- PACKAGES -->
+    <!-- FEATURED MOVE PACKAGES -->
     <div class="section">
       <h2>Choose Your Move Size</h2>
+      <p>Start with a package or build your own below.</p>
 
       <div class="package-grid">
-
         <div class="package-card">
           <h3>Light Move</h3>
+          <p class="package-subtext">Great for studios, dorms, and smaller apartment moves.</p>
           <ul class="package-list">
             <li>10 Classic Totes</li>
             <li>1 Wheeled Tote</li>
             <li>1 Mattress Bag</li>
+            <li>Ideal for lighter moves</li>
           </ul>
-          <button id="lightMoveBtn" type="button">Choose Light Move</button>
-          <p>$49</p>
+          <div class="package-bottom">
+            <button id="lightMoveBtn" class="btn package-btn" type="button">Choose Light Move</button>
+            <p class="package-price">$49</p>
+          </div>
         </div>
 
-        <div class="package-card">
+        <div class="package-card featured">
           <h3>Family Move</h3>
+          <p class="package-subtext">A balanced setup for typical family homes and local moves.</p>
           <ul class="package-list">
             <li>20 Classic Totes</li>
             <li>2 Wheeled Totes</li>
             <li>1 Dolly</li>
             <li>2 Mattress Bag</li>
           </ul>
-          <button id="familyMoveBtn" type="button">Choose Family Move</button>
-          <p>$99</p>
+          <div class="package-bottom">
+            <button id="familyMoveBtn" class="btn package-btn" type="button">Choose Family Move</button>
+            <p class="package-price">$99</p>
+          </div>
         </div>
 
         <div class="package-card">
           <h3>Full House Move</h3>
+          <p class="package-subtext">Best for larger homes, bigger households, and fuller moves.</p>
           <ul class="package-list">
             <li>30 Classic Totes</li>
             <li>4 Wheeled Totes</li>
             <li>1 Dolly</li>
             <li>4 Mattress Bag</li>
           </ul>
-          <button id="fullMoveBtn" type="button">Choose Full House Move</button>
-          <p>$159</p>
+          <div class="package-bottom">
+            <button id="fullMoveBtn" class="btn package-btn" type="button">Choose Full House Move</button>
+            <p class="package-price">$159</p>
+          </div>
         </div>
-
       </div>
     </div>
 
-    <!-- BUILD -->
-    <div class="section">
+    <!-- BUILD YOUR OWN -->
+    <div class="build-section section">
       <h2>Build Your Own</h2>
 
-      <select id="classicTotes">
-        <option value="0">0</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-      </select>
+      <div class="build-grid">
+        <div class="item-row">
+          <label for="classicTotes">Classic Tote</label>
+          <select id="classicTotes">
+            <option value="0">0</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
 
-      <select id="wheeledTotes">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="4">4</option>
-      </select>
+        <div class="item-row">
+          <label for="wheeledTotes">Wheeled Tote</label>
+          <select id="wheeledTotes">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+          </select>
+        </div>
 
-      <select id="dollies">
-        <option value="0">0</option>
-        <option value="1">1</option>
-      </select>
+        <div class="item-row">
+          <label for="dollies">Dolly</label>
+          <select id="dollies">
+            <option value="0">0</option>
+            <option value="1">1</option>
+          </select>
+        </div>
 
-      <select id="mattressBags">
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="4">4</option>
-      </select>
+        <div class="item-row">
+          <label for="mattressBags">Mattress Bag</label>
+          <select id="mattressBags">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+      </div>
     </div>
 
-    <!-- SUMMARY -->
-    <div>
-      <h3>Total: $<span id="orderTotal">0</span></h3>
-      <div id="summaryDetails"></div>
-    </div>
+    <!-- FORM -->
+    <div class="customer-form-wrapper" id="customerForm">
+      <form id="bookingForm" class="customer-form">
 
-    <!-- PAYPAL -->
-    <div id="paypal-button-container"></div>
+        <!-- SUMMARY -->
+        <div class="order-summary full-width">
+          <h3>Your Reservation Summary</h3>
+          <div id="summaryDetails"></div>
+          <p class="total">Total: $<span id="orderTotal">0</span></p>
+        </div>
+
+        <!-- PAYPAL -->
+        <div class="payment-section full-width">
+          <h3>Secure Checkout</h3>
+          <div id="paypal-button-container"></div>
+        </div>
+
+      </form>
+    </div>
 
   </div>
 
-  <!-- PAYPAL SDK -->
+  <!-- PAYPAL -->
   <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFllspJ20LCnMEmafBBC196-H0Wrof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMvAoz&currency=USD"></script>
 
-  <!-- SCRIPT -->
   <script>
   document.addEventListener("DOMContentLoaded", function () {
 
@@ -117,6 +153,7 @@
     const wheeled = document.getElementById("wheeledTotes");
     const dollies = document.getElementById("dollies");
     const mattress = document.getElementById("mattressBags");
+
     const totalEl = document.getElementById("orderTotal");
     const summary = document.getElementById("summaryDetails");
 
@@ -137,7 +174,6 @@
       `;
     }
 
-    // PACKAGE BUTTONS
     document.getElementById("lightMoveBtn").onclick = function () {
       classic.value = "10";
       wheeled.value = "1";
@@ -162,23 +198,16 @@
       totalEl.textContent = 159;
     };
 
-    // UPDATE ON CHANGE
     [classic, wheeled, dollies, mattress].forEach(el => {
       el.addEventListener("change", updateTotal);
     });
 
-    // PAYPAL
     paypal.Buttons({
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
             amount: { value: totalEl.textContent || "0" }
           }]
-        });
-      },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-          alert("Payment successful!");
         });
       }
     }).render('#paypal-button-container');
