@@ -179,17 +179,50 @@
           <div id="summaryDetails"></div>
           <p class="total">Total: $<span id="orderTotal">0</span></p>
         </div>
+<!-- PAYMENT SECTION -->
+<div class="payment-section full-width">
+  <h3>Secure Checkout</h3>
+  <p class="secure-note">
+    🔒 Secure payment powered by PayPal. Your information is protected.
+  </p>
 
-        <!-- PAYMENT SECTION -->
-       <!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD"></script>
+  <div id="paypal-button-container"></div>
+</div>
 
-<!-- PayPal Button -->
+</form>
+</div>
+
+<!-- SERVICE AREA -->
+<div class="section">
+  <h2>Service Area</h2>
+  <p>Winchester • Front Royal • Shenandoah Valley</p>
+</div>
+
+<!-- CONTACT -->
+<div class="section">
+  <h2>Contact</h2>
+  <p>Email: customersupport@shenandoahtotes.com</p>
+  <p>Phone: (240) 586-0154</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Shenandoah Tote Rental</p>
+  <p class="version">v1.0.7</p>
+</footer>
+
+</div>
+
+<script src="script.js"></script>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD&components=buttons"></script>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("load", function () {
 
   if (!window.paypal) {
-    console.error("PayPal SDK not loaded");
+    console.error("PayPal SDK failed to load");
     return;
   }
 
@@ -197,9 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createOrder: function(data, actions) {
       return actions.order.create({
         purchase_units: [{
-          amount: {
-            value: "10.00"
-          }
+          amount: { value: "10.00" }
         }]
       });
     }
@@ -207,3 +238,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
+</body>
+</html>
