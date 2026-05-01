@@ -131,38 +131,30 @@
           </p>
 
           <!-- ✅ THIS MUST EXIST -->
-          <div id="paypal-button-container"></div>
+        <!-- PayPal Button Container -->
+<div id="paypal-button-container"></div>
 
-        </div>
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFllspJ20LCnMEmafBBC196-H0Wrof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMvAoz&currency=USD"></script>
 
-      </form>
-    </div>
+<!-- PayPal Button -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    <!-- FOOTER -->
-    <footer>
-      <p>© 2026 Shenandoah Tote Rental</p>
-    </footer>
+  if (!window.paypal) {
+    console.error("PayPal failed to load");
+    return;
+  }
 
-  </div>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: "10.00" }
+        }]
+      });
+    }
+  }).render('#paypal-button-container');
 
-  <!-- YOUR SCRIPT -->
-  <script src="script.js"></script>
-
-  <!-- ✅ PAYPAL SDK (CLEAN URL ONLY) -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFllspJ2OLCnMEmafBBC196-H0Wrof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
-
-  <!-- ✅ PAYPAL BUTTON -->
-  <script>
-    paypal.Buttons({
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: { value: "10.00" }
-          }]
-        });
-      }
-    }).render('#paypal-button-container');
-  </script>
-
-</body>
-</html>
+});
+</script>
