@@ -227,9 +227,37 @@
           <textarea id="notes" name="notes" placeholder="Gate code, apartment number, special instructions, etc."></textarea>
         </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn">Submit Reservation Request</button>
-        </div>
+        <!-- ORDER SUMMARY -->
+
+<div class="order-summary full-width">
+
+  <h3>Your Reservation Summary</h3>
+
+  <div id="summaryDetails">
+
+    <!-- Will populate dynamically -->
+
+  </div>
+
+  <p class="total">Total: $<span id="orderTotal">0</span></p>
+
+</div>
+
+<!-- PAYMENT SECTION -->
+
+<div class="payment-section full-width">
+
+  <h3>Secure Checkout</h3>
+
+  <p class="secure-note">
+
+    🔒 Secure payment powered by PayPal. Your information is protected.
+
+  </p>
+
+  <div id="paypal-button-container"></div>
+
+</div>
       </form>
     </div>
 
