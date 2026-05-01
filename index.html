@@ -9,17 +9,59 @@
   
 <body>
 
+  <div class="hero">
+    <img src="logo.png" class="logo" alt="Shenandoah Tote Rental Logo">
+  </div>
+
+  <hr>
+
   <div class="container">
 
     <h1>Shenandoah Tote Rental</h1>
+    <p>A cleaner, easier way to move in the Shenandoah Valley.</p>
 
     <!-- PACKAGES -->
     <div class="section">
       <h2>Choose Your Move Size</h2>
 
-      <button id="lightMoveBtn">Light Move ($49)</button>
-      <button id="familyMoveBtn">Family Move ($99)</button>
-      <button id="fullMoveBtn">Full House ($159)</button>
+      <div class="package-grid">
+
+        <div class="package-card">
+          <h3>Light Move</h3>
+          <ul class="package-list">
+            <li>10 Classic Totes</li>
+            <li>1 Wheeled Tote</li>
+            <li>1 Mattress Bag</li>
+          </ul>
+          <button id="lightMoveBtn" type="button">Choose Light Move</button>
+          <p>$49</p>
+        </div>
+
+        <div class="package-card">
+          <h3>Family Move</h3>
+          <ul class="package-list">
+            <li>20 Classic Totes</li>
+            <li>2 Wheeled Totes</li>
+            <li>1 Dolly</li>
+            <li>2 Mattress Bag</li>
+          </ul>
+          <button id="familyMoveBtn" type="button">Choose Family Move</button>
+          <p>$99</p>
+        </div>
+
+        <div class="package-card">
+          <h3>Full House Move</h3>
+          <ul class="package-list">
+            <li>30 Classic Totes</li>
+            <li>4 Wheeled Totes</li>
+            <li>1 Dolly</li>
+            <li>4 Mattress Bag</li>
+          </ul>
+          <button id="fullMoveBtn" type="button">Choose Full House Move</button>
+          <p>$159</p>
+        </div>
+
+      </div>
     </div>
 
     <!-- BUILD -->
@@ -37,7 +79,7 @@
         <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>
-        <option value="4">4</option> <!-- FIXED -->
+        <option value="4">4</option>
       </select>
 
       <select id="dollies">
@@ -47,15 +89,16 @@
 
       <select id="mattressBags">
         <option value="0">0</option>
-        <option value="1">1</option> <!-- FIXED -->
+        <option value="1">1</option>
         <option value="2">2</option>
         <option value="4">4</option>
       </select>
     </div>
 
     <!-- SUMMARY -->
-    <div class="section">
+    <div>
       <h3>Total: $<span id="orderTotal">0</span></h3>
+      <div id="summaryDetails"></div>
     </div>
 
     <!-- PAYPAL -->
@@ -66,6 +109,7 @@
   <!-- PAYPAL SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFllspJ20LCnMEmafBBC196-H0Wrof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMvAoz&currency=USD"></script>
 
+  <!-- SCRIPT -->
   <script>
   document.addEventListener("DOMContentLoaded", function () {
 
@@ -74,6 +118,7 @@
     const dollies = document.getElementById("dollies");
     const mattress = document.getElementById("mattressBags");
     const totalEl = document.getElementById("orderTotal");
+    const summary = document.getElementById("summaryDetails");
 
     function updateTotal() {
       const total =
@@ -83,6 +128,13 @@
         (parseInt(mattress.value) * 3);
 
       totalEl.textContent = total;
+
+      summary.innerHTML = `
+        Classic: ${classic.value}<br>
+        Wheeled: ${wheeled.value}<br>
+        Dollies: ${dollies.value}<br>
+        Mattress: ${mattress.value}
+      `;
     }
 
     // PACKAGE BUTTONS
@@ -110,7 +162,7 @@
       totalEl.textContent = 159;
     };
 
-    // UPDATE TOTAL ON CHANGE
+    // UPDATE ON CHANGE
     [classic, wheeled, dollies, mattress].forEach(el => {
       el.addEventListener("change", updateTotal);
     });
@@ -120,9 +172,7 @@
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
-            amount: {
-              value: totalEl.textContent || "0"
-            }
+            amount: { value: totalEl.textContent || "0" }
           }]
         });
       },
