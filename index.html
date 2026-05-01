@@ -217,51 +217,32 @@
 <script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD&components=buttons&enable-funding=venmo,paylater,card"></script>
 
 <script>
-window.addEventListener("load", function () {
+paypal.Buttons({
 
-  console.log("Page loaded");
-  
-  if (typeof paypal === "undefined") {
-    console.error("PayPal SDK failed to load");
-    return;
+  style: {
+    layout: 'vertical',
+    color: 'blue',
+    shape: 'rect',
+    label: 'paypal'
+  },
+
+  createOrder: function(data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: { value: "10.00" }
+      }]
+    });
+  },
+
+  onApprove: function(data, actions) {
+    return actions.order.capture().then(function(details) {
+      alert("Payment successful!");
+    });
+  },
+
+  onError: function(err) {
+    console.error("PayPal error:", err);
   }
 
-  const container = document.getElementById("paypal-button-container");
-
-  if (!container) {
-    console.error("PayPal container not found");
-    return;
-  }
-
-  console.log("Rendering PayPal buttons...");
-
-  paypal.Buttons({
-    style: {
-      layout: 'vertical',
-      color: 'blue',
-      shape: 'rect',
-      label: 'paypal'
-    },
-
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: { value: "10.00" }
-        }]
-      });
-    },
-
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        alert("Payment successful!");
-      });
-    },
-
-    onError: function(err) {
-      console.error("PayPal error:", err);
-    }
-
-  }).render('#paypal-button-container');
-
-});
+}).render('#paypal-button-container');
 </script>
