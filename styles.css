@@ -230,3 +230,20 @@ footer {
   font-size: 0.9rem;
   color: #64748b;
 }
+.payment-section {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;   /* centers everything inside */
+
+}
+
+#paypal-button-container {
+
+  width: 100%;
+
+  max-width: 400px;
+
+}
