@@ -181,68 +181,29 @@
         </div>
 
         <!-- PAYMENT SECTION -->
-        <div class="payment-section full-width">
-          <h3>Secure Checkout</h3>
-          <p class="secure-note">
-            🔒 Secure payment powered by PayPal. Your information is protected.
-          </p>
-          <div id="paypal-button-container"></div>
-        </div>
+       <!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD"></script>
 
-      </form>
-    </div>
-
-    <!-- SERVICE AREA -->
-    <div class="section">
-      <h2>Service Area</h2>
-      <p>Winchester • Front Royal • Shenandoah Valley</p>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="section">
-      <h2>Contact</h2>
-      <p>Email: customersupport@shenandoahtotes.com</p>
-      <p>Phone: (240) 586-0154</p>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-      <p>© 2026 Shenandoah Tote Rental</p>
-      <p class="version">v1.0.7</p>
-    </footer>
-
-  </div>
-
-<script src="script.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD&components=buttons&enable-funding=venmo,paylater,card"></script>
-
+<!-- PayPal Button -->
 <script>
-paypal.Buttons({
+document.addEventListener("DOMContentLoaded", function () {
 
-  style: {
-    layout: 'vertical',
-    color: 'blue',
-    shape: 'rect',
-    label: 'paypal'
-  },
-
-  createOrder: function(data, actions) {
-    return actions.order.create({
-      purchase_units: [{
-        amount: { value: "10.00" }
-      }]
-    });
-  },
-
-  onApprove: function(data, actions) {
-    return actions.order.capture().then(function(details) {
-      alert("Payment successful!");
-    });
-  },
-
-  onError: function(err) {
-    console.error("PayPal error:", err);
+  if (!window.paypal) {
+    console.error("PayPal SDK not loaded");
+    return;
   }
 
-}).render('#paypal-button-container');
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: "10.00"
+          }
+        }]
+      });
+    }
+  }).render('#paypal-button-container');
+
+});
 </script>
