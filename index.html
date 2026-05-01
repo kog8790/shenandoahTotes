@@ -9,152 +9,132 @@
   
 <body>
 
-  <!-- HERO -->
-  <div class="hero">
-    <img src="logo.png" class="logo" alt="Shenandoah Tote Rental Logo">
-  </div>
-
-  <hr>
-
   <div class="container">
 
-    <!-- HEADER -->
     <h1>Shenandoah Tote Rental</h1>
-    <p>A cleaner, easier way to move in the Shenandoah Valley.</p>
 
     <!-- PACKAGES -->
     <div class="section">
       <h2>Choose Your Move Size</h2>
-      <p>Start with a package or build your own below.</p>
 
-      <div class="package-grid">
-        <div class="package-card">
-          <h3>Light Move</h3>
-          <ul class="package-list">
-            <li>10 Classic Totes</li>
-            <li>1 Wheeled Tote</li>
-            <li>1 Mattress Bag</li>
-          </ul>
-          <button id="lightMoveBtn" class="btn package-btn">Choose Light Move</button>
-          <p class="package-price">$49</p>
-        </div>
-
-        <div class="package-card featured">
-          <h3>Family Move</h3>
-          <ul class="package-list">
-            <li>20 Classic Totes</li>
-            <li>2 Wheeled Totes</li>
-            <li>1 Dolly</li>
-            <li>2 Mattress Bag</li>
-          </ul>
-          <button id="familyMoveBtn" class="btn package-btn">Choose Family Move</button>
-          <p class="package-price">$99</p>
-        </div>
-
-        <div class="package-card">
-          <h3>Full House Move</h3>
-          <ul class="package-list">
-            <li>30 Classic Totes</li>
-            <li>4 Wheeled Totes</li>
-            <li>1 Dolly</li>
-            <li>4 Mattress Bag</li>
-          </ul>
-          <button id="fullMoveBtn" class="btn package-btn">Choose Full House Move</button>
-          <p class="package-price">$159</p>
-        </div>
-      </div>
+      <button id="lightMoveBtn">Light Move ($49)</button>
+      <button id="familyMoveBtn">Family Move ($99)</button>
+      <button id="fullMoveBtn">Full House ($159)</button>
     </div>
 
     <!-- BUILD -->
-    <div class="build-section section">
+    <div class="section">
       <h2>Build Your Own</h2>
 
-      <div class="build-grid">
-        <div class="item-row">
-          <label>Classic Tote</label>
-          <select id="classicTotes">
-            <option value="0">0</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
-        </div>
+      <select id="classicTotes">
+        <option value="0">0</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
 
-        <div class="item-row">
-          <label>Wheeled Tote</label>
-          <select id="wheeledTotes">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
+      <select id="wheeledTotes">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4">4</option> <!-- FIXED -->
+      </select>
 
-        <div class="item-row">
-          <label>Dolly</label>
-          <select id="dollies">
-            <option value="0">0</option>
-            <option value="1">1</option>
-          </select>
-        </div>
+      <select id="dollies">
+        <option value="0">0</option>
+        <option value="1">1</option>
+      </select>
 
-        <div class="item-row">
-          <label>Mattress Bag</label>
-          <select id="mattressBags">
-            <option value="0">0</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="build-cta">
-        <a href="#customerForm" class="btn">Book Now</a>
-      </div>
+      <select id="mattressBags">
+        <option value="0">0</option>
+        <option value="1">1</option> <!-- FIXED -->
+        <option value="2">2</option>
+        <option value="4">4</option>
+      </select>
     </div>
 
-    <!-- FORM -->
-    <div class="customer-form-wrapper" id="customerForm">
-      <h2>Reservation Details</h2>
+    <!-- SUMMARY -->
+    <div class="section">
+      <h3>Total: $<span id="orderTotal">0</span></h3>
+    </div>
 
-      <form id="bookingForm" class="customer-form">
+    <!-- PAYPAL -->
+    <div id="paypal-button-container"></div>
 
-        <div class="order-summary full-width">
-          <h3>Your Reservation Summary</h3>
-          <div id="summaryDetails"></div>
-          <p class="total">Total: $<span id="orderTotal">0</span></p>
-        </div>
+  </div>
 
-        <div class="payment-section full-width">
-          <h3>Secure Checkout</h3>
-          <p class="secure-note">
-            🔒 Secure payment powered by PayPal
-          </p>
+  <!-- PAYPAL SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFllspJ20LCnMEmafBBC196-H0Wrof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMvAoz&currency=USD"></script>
 
-          <!-- ✅ THIS MUST EXIST -->
-        <!-- PayPal Button Container -->
-<div id="paypal-button-container"></div>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
 
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFllspJ20LCnMEmafBBC196-H0Wrof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMvAoz&currency=USD"></script>
+    const classic = document.getElementById("classicTotes");
+    const wheeled = document.getElementById("wheeledTotes");
+    const dollies = document.getElementById("dollies");
+    const mattress = document.getElementById("mattressBags");
+    const totalEl = document.getElementById("orderTotal");
 
-<!-- PayPal Button -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+    function updateTotal() {
+      const total =
+        (parseInt(classic.value) * 2) +
+        (parseInt(wheeled.value) * 5) +
+        (parseInt(dollies.value) * 10) +
+        (parseInt(mattress.value) * 3);
 
-  if (!window.paypal) {
-    console.error("PayPal failed to load");
-    return;
-  }
-
-  paypal.Buttons({
-    createOrder: function(data, actions) {
-      return actions.order.create({
-        purchase_units: [{
-          amount: { value: "10.00" }
-        }]
-      });
+      totalEl.textContent = total;
     }
-  }).render('#paypal-button-container');
 
-});
-</script>
+    // PACKAGE BUTTONS
+    document.getElementById("lightMoveBtn").onclick = function () {
+      classic.value = "10";
+      wheeled.value = "1";
+      dollies.value = "0";
+      mattress.value = "1";
+      totalEl.textContent = 49;
+    };
+
+    document.getElementById("familyMoveBtn").onclick = function () {
+      classic.value = "20";
+      wheeled.value = "2";
+      dollies.value = "1";
+      mattress.value = "2";
+      totalEl.textContent = 99;
+    };
+
+    document.getElementById("fullMoveBtn").onclick = function () {
+      classic.value = "30";
+      wheeled.value = "4";
+      dollies.value = "1";
+      mattress.value = "4";
+      totalEl.textContent = 159;
+    };
+
+    // UPDATE TOTAL ON CHANGE
+    [classic, wheeled, dollies, mattress].forEach(el => {
+      el.addEventListener("change", updateTotal);
+    });
+
+    // PAYPAL
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: totalEl.textContent || "0"
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert("Payment successful!");
+        });
+      }
+    }).render('#paypal-button-container');
+
+  });
+  </script>
+
+</body>
+</html>
