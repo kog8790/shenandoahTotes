@@ -213,28 +213,21 @@
 
   </div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 
-  <!-- ✅ PAYPAL (ONLY ADDITION) -->
-  <script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD&components=buttons&enable-funding=venmo,paylater,card"></script>
-  <script>
-  paypal.Buttons({
-    createOrder: function(data, actions) {
-      const total = document.getElementById("orderTotal").innerText;
-      return actions.order.create({
-        purchase_units: [{
-          amount: { value: total }
-        }]
-      });
-    },
-    onApprove: function(data, actions) {
-      return actions.order.capture().then(function(details) {
-        alert("Payment successful! Thank you " + details.payer.name.given_name);
-        document.getElementById("bookingForm").submit();
-      });
-    }
-  }).render('#paypal-button-container');
-  </script>
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_ID&currency=USD&components=buttons"></script>
+
+<script>
+paypal.Buttons({
+  createOrder: function(data, actions) {
+    return actions.order.create({
+      purchase_units: [{
+        amount: { value: "10.00" }
+      }]
+    });
+  }
+}).render('#paypal-button-container');
+</script>
 
 </body>
 </html>
