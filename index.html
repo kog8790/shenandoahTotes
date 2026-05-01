@@ -1,287 +1,191 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>Shenandoah Tote Rental</title>
+
   <link rel="stylesheet" href="styles.css" />
+
 </head>
+
   
+
 <body>
 
-  <!-- HERO (FULL WIDTH) -->
+  <!-- HERO -->
+
   <div class="hero">
+
     <img src="logo.png" class="logo" alt="Shenandoah Tote Rental Logo">
+
   </div>
 
   <hr>
 
-  <!-- MAIN CONTENT -->
   <div class="container">
 
-    <!-- HEADER -->
     <h1>Shenandoah Tote Rental</h1>
+
     <p>A cleaner, easier way to move in the Shenandoah Valley.</p>
 
-    <!-- FEATURED MOVE PACKAGES -->
-    <div class="section">
-      <h2>Choose Your Move Size</h2>
-      <p>Start with a package or build your own below.</p>
-
-      <div class="package-grid">
-        <div class="package-card">
-          <h3>Light Move</h3>
-          <p class="package-subtext">Great for studios, dorms, and smaller apartment moves.</p>
-          <ul class="package-list">
-            <li>10 Classic Totes</li>
-            <li>1 Wheeled Tote</li>
-            <li>1 Mattress Bag</li>
-            <li>Ideal for lighter moves</li>
-          </ul>
-          <div class= "package-bottom">
-            <button id="lightMoveBtn" class="btn package-btn" type="button">Choose Light Move</button>
-            <p class="package-price">$49</p>
-          </div>
-        </div>
-
-        <div class="package-card featured">
-          <h3>Family Move</h3>
-          <p class="package-subtext">A balanced setup for typical family homes and local moves.</p>
-          <ul class="package-list">
-            <li>20 Classic Totes</li>
-            <li>2 Wheeled Totes</li>
-            <li>1 Dolly</li>
-            <li>2 Mattress Bag</li>
-          </ul>
-          <div class= "package-bottom">
-            <button id="familyMoveBtn" class="btn package-btn" type="button">Choose Family Move</button>
-            <p class="package-price">$99</p>
-          </div>
-        </div>
-
-        <div class="package-card">
-          <h3>Full House Move</h3>
-          <p class="package-subtext">Best for larger homes, bigger households, and fuller moves.</p>
-          <ul class="package-list">
-            <li>30 Classic Totes</li>
-            <li>4 Wheeled Totes</li>
-            <li>1 Dolly</li>
-            <li>4 Mattress Bag</li>
-          </ul>
-          <div class= "package-bottom">
-            <button id="fullMoveBtn" class="btn package-btn" type="button">Choose Full House Move</button>
-            <p class="package-price">$159</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FEATURES -->
-    <div class="section">
-      <h2>Why Totes?</h2>
-
-      <div class="features">
-        <div class="card">
-          <h3>Delivered</h3>
-          <p>No more hunting for boxes. We bring them to you.</p>
-        </div>
-
-        <div class="card">
-          <h3>Stackable</h3>
-          <p>Pack cleaner and move more efficiently.</p>
-        </div>
-
-        <div class="card">
-          <h3>Picked Up</h3>
-          <p>We grab them when you're done. No cleanup hassle.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- HOW IT WORKS -->
-    <div class="section">
-      <h2>How It Works</h2>
-      <p>Choose a package or build your own → Enter your details → We confirm your reservation → Deliver → Move → Pickup</p>
-    </div>
-
     <!-- BUILD YOUR OWN -->
+
     <div class="build-section section">
+
       <h2>Build Your Own</h2>
-      <p>Select exactly what you need, then continue to your reservation details.</p>
 
       <div class="build-grid">
+
         <div class="item-row">
+
           <label for="classicTotes">Classic Tote</label>
-          <span>Select how many classic totes you want.</span>
-          <select id="classicTotes" name="classicTotes">
+
+          <select id="classicTotes">
+
             <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+
             <option value="10">10</option>
-            <option value="15">15</option>
+
             <option value="20">20</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-            
+
           </select>
+
         </div>
 
         <div class="item-row">
+
           <label for="wheeledTotes">Wheeled Tote</label>
-          <span>Select how many wheeled totes you want.</span>
-          <select id="wheeledTotes" name="wheeledTotes">
+
+          <select id="wheeledTotes">
+
             <option value="0">0</option>
+
             <option value="1">1</option>
+
             <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+
           </select>
+
         </div>
 
-        <div class="item-row">
-          <label for="dollies">Dolly</label>
-          <span>Select how many dollies you want.</span>
-          <select id="dollies" name="dollies">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>           
-          </select>
-        </div>
-
-        <div class="item-row">
-          <label for="mattressBags">Mattress Bag</label>
-          <span>Select how many mattress bags you want.</span>
-          <select id="mattressBags" name="mattressBags">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
       </div>
 
-      <div class="build-cta">
-        <a href="#customerForm" class="btn">Book Now</a>
-      </div>
     </div>
 
-    <!-- CUSTOMER INFO FORM -->
+    <!-- FORM -->
+
     <div class="customer-form-wrapper" id="customerForm">
+
       <h2>Reservation Details</h2>
-      <p>Tell us where you're moving and when, and we’ll take it from there.</p>
 
       <form id="bookingForm" class="customer-form">
-        <div>
-          <label for="fullName">Full Name</label>
-          <input type="text" id="fullName" name="fullName" required>
-        </div>
 
         <div>
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" required>
-        </div>
 
-        <div>
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" required>
+          <label>Full Name</label>
+
+          <input type="text" required>
+
         </div>
 
         <div>
-          <label for="startDate">Start Date</label>
-          <input type="date" id="startDate" name="startDate" required>
+
+          <label>Email</label>
+
+          <input type="email" required>
+
         </div>
 
         <div>
-          <label for="endDate">End Date</label>
-          <input type="date" id="endDate" name="endDate" required>
-        </div>
 
-        <div>
-          <label for="pickupAddress">Pickup Address</label>
-          <input type="text" id="pickupAddress" name="pickupAddress" required>
-        </div>
-        <div class="item-row">
-  <label for="dropoffTime">Drop-Off Time</label>
-  <span>Select your preferred drop-off time.</span>
-  <input type="time" id="dropoffTime" name="dropoffTime" required>
-</div>
+          <label>Pickup Address</label>
 
-        <div class="full-width">
-          <label for="dropoffAddress">Dropoff Address</label>
-          <input type="text" id="dropoffAddress" name="dropoffAddress" required>
-        </div>
-      
-<div class="item-row">
-  <label for="pickupTime">Pick-Up Time</label>
-  <span>Select your preferred pick-up time.</span>
-  <input type="time" id="pickupTime" name="pickupTime" required>
-</div>
+          <input type="text" required>
 
-        <div class="full-width">
-          <label for="notes">Notes</label>
-          <textarea id="notes" name="notes" placeholder="Gate code, apartment number, special instructions, etc."></textarea>
         </div>
 
         <!-- ORDER SUMMARY -->
 
-<div class="order-summary full-width">
+        <div class="order-summary full-width">
 
-  <h3>Your Reservation Summary</h3>
+          <h3>Your Reservation Summary</h3>
 
-  <div id="summaryDetails">
+          <div id="summaryDetails"></div>
 
-    <!-- Will populate dynamically -->
+          <p class="total">Total: $<span id="orderTotal">50</span></p>
 
-  </div>
+        </div>
 
-  <p class="total">Total: $<span id="orderTotal">0</span></p>
+        <!-- PAYPAL -->
 
-</div>
+        <div class="payment-section full-width">
 
-<!-- PAYMENT SECTION -->
+          <h3>Pay Now to Secure Your Reservation</h3>
 
-<div class="payment-section full-width">
+          <div id="paypal-button-container"></div>
 
-  <h3>Secure Checkout</h3>
+        </div>
 
-  <p class="secure-note">
-
-    🔒 Secure payment powered by PayPal. Your information is protected.
-
-  </p>
-
-  <div id="paypal-button-container"></div>
-
-</div>
       </form>
-    </div>
 
-    <!-- SERVICE AREA -->
-    <div class="section">
-      <h2>Service Area</h2>
-      <p>Winchester • Front Royal • Shenandoah Valley</p>
     </div>
-
-    <!-- CONTACT -->
-    <div class="section">
-      <h2>Contact</h2>
-      <p>Email: customersupport@shenandoahtotes.com</p>
-      <p>Phone: (240) 586-0154</p>
-    </div>
-
-    <!-- FOOTER -->
-   <footer>
-  <p>© 2026 Shenandoah Tote Rental</p>
-  <p class="version">v1.0.7</p>
-</footer>
 
   </div>
+
+  <!-- YOUR SCRIPT -->
 
   <script src="script.js"></script>
+
+  <!-- PAYPAL SDK -->
+
+  <script src="https://www.paypal.com/sdk/js?client-id=ARbQr8bv9h07149Z75ZF1aNEZ60AqNdldCKsdj58JyV23Za8P4eAQiVMEav9EGItsDhwSGszljvhInJY&currency=USD&components=buttons&enable-funding=venmo,paylater,card"></script>
+
+  <script>
+
+    paypal.Buttons({
+
+      createOrder: function(data, actions) {
+
+        const total = document.getElementById("orderTotal").innerText;
+
+        return actions.order.create({
+
+          purchase_units: [{
+
+            amount: {
+
+              value: total
+
+            }
+
+          }]
+
+        });
+
+      },
+
+      onApprove: function(data, actions) {
+
+        return actions.order.capture().then(function(details) {
+
+          alert("Payment successful! Thank you " + details.payer.name.given_name);
+
+          document.getElementById("bookingForm").submit();
+
+        });
+
+      }
+
+    }).render('#paypal-button-container');
+
+  </script>
+
 </body>
+
 </html>
