@@ -273,3 +273,12 @@ footer {
     flex-direction: column;
   }
 }
+ul.package-list {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
+}
+
+ul.package-list li {
+  list-style: none !important;
+}
