@@ -115,8 +115,6 @@
       <!-- BOOK BUTTON -->
       <div class="build-cta">
         <button id="bookNowBtn" class="btn" type="button">Book Now</button>
-
-        <!-- ✅ DEPOSIT MESSAGE (PROMINENT) -->
         <div class="deposit-note">
           🔒 Only 50% due today • Remaining balance paid at pickup
         </div>
@@ -184,11 +182,8 @@
 
   </div>
 
-  <!-- ========================= -->
-  <!-- 💳 DEPOSIT MODAL -->
-  <!-- ========================= -->
+  <!-- MODAL -->
   <div id="depositModal" class="modal">
-
     <div class="modal-content">
 
       <span class="close">&times;</span>
@@ -201,15 +196,91 @@
         <p><strong>Deposit Due Now: $<span id="depositAmount">0</span></strong></p>
       </div>
 
-      <!-- PayPal renders here -->
       <div id="paypal-modal-container"></div>
 
     </div>
-
   </div>
 
-  <!-- ✅ PAYPAL SDK (REQUIRED) -->
+  <!-- PAYPAL SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
+
+  <!-- SCRIPT -->
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const classic = document.getElementById("classicTotes");
+    const wheeled = document.getElementById("wheeledTotes");
+    const dollies = document.getElementById("dollies");
+    const mattress = document.getElementById("mattressBags");
+
+    const totalEl = document.getElementById("orderTotal");
+    const summary = document.getElementById("summaryDetails");
+
+    const modal = document.getElementById("depositModal");
+    const modalTotal = document.getElementById("modalTotal");
+    const depositAmount = document.getElementById("depositAmount");
+
+    function updateTotal() {
+      const total =
+        (parseInt(classic.value) * 2) +
+        (parseInt(wheeled.value) * 5) +
+        (parseInt(dollies.value) * 10) +
+        (parseInt(mattress.value) * 3);
+
+      totalEl.textContent = total;
+
+      summary.innerHTML = `
+        Classic: ${classic.value}<br>
+        Wheeled: ${wheeled.value}<br>
+        Dollies: ${dollies.value}<br>
+        Mattress: ${mattress.value}
+      `;
+    }
+
+    document.getElementById("lightMoveBtn").onclick = () => {
+      classic.value = "10"; wheeled.value = "1"; dollies.value = "0"; mattress.value = "1";
+      updateTotal();
+    };
+
+    document.getElementById("familyMoveBtn").onclick = () => {
+      classic.value = "20"; wheeled.value = "2"; dollies.value = "1"; mattress.value = "2";
+      updateTotal();
+    };
+
+    document.getElementById("fullMoveBtn").onclick = () => {
+      classic.value = "30"; wheeled.value = "4"; dollies.value = "1"; mattress.value = "4";
+      updateTotal();
+    };
+
+    [classic, wheeled, dollies, mattress].forEach(el => {
+      el.addEventListener("change", updateTotal);
+    });
+
+    document.getElementById("bookNowBtn").onclick = function () {
+      const total = parseFloat(totalEl.textContent) || 0;
+      const deposit = (total / 2).toFixed(2);
+
+      modalTotal.textContent = total;
+      depositAmount.textContent = deposit;
+
+      modal.style.display = "flex";
+
+      document.getElementById("paypal-modal-container").innerHTML = "";
+
+      paypal.Buttons({
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{ amount: { value: deposit } }]
+          });
+        }
+      }).render('#paypal-modal-container');
+    };
+
+    document.querySelector(".close").onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+  });
+  </script>
 
 </body>
 </html>
