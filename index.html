@@ -120,7 +120,54 @@
         </div>
       </div>
     </div>
+<div class="build-cta">
+  <a href="#customerForm" class="btn">Book Now</a>
+</div>
 
+<!-- CUSTOMER FORM -->
+<div class="customer-form-wrapper" id="customerForm">
+  <h2>Reservation Details</h2>
+
+  <form id="bookingForm" class="customer-form">
+
+    <div>
+      <label>Full Name</label>
+      <input type="text" required>
+    </div>
+
+    <div>
+      <label>Email</label>
+      <input type="email" required>
+    </div>
+
+    <div>
+      <label>Phone</label>
+      <input type="tel" required>
+    </div>
+
+    <div>
+      <label>Move Date</label>
+      <input type="date" required>
+    </div>
+
+    <div>
+      <label>Drop-Off Address</label>
+      <input type="text" required>
+    </div>
+
+    <div class="order-summary full-width">
+      <h3>Your Reservation Summary</h3>
+      <div id="summaryDetails"></div>
+      <p class="total">Total: $<span id="orderTotal">0</span></p>
+    </div>
+
+    <div class="payment-section full-width">
+      <h3>Secure Checkout</h3>
+      <div id="paypal-button-container"></div>
+    </div>
+
+  </form>
+</div>
     <!-- FORM -->
     <div class="customer-form-wrapper" id="customerForm">
       <form id="bookingForm" class="customer-form">
