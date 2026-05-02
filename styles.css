@@ -120,21 +120,18 @@ p {
   border: 2px solid #1d4ed8;
 }
 
-/* REMOVE BULLETS + ALIGN LIST */
+/* ✅ PACKAGE LIST (FIXED) */
 .package-list {
   list-style: none;
-  padding-left: 0;
-  margin: 15px 0 0;
-  text-align: left;
+  padding: 0;
+  margin: 15px auto;
+  text-align: center;
+  width: fit-content;
 }
 
 .package-list li {
-  padding: 6px 0;
+  margin: 6px 0;
   color: #334155;
-}
-
-.package-list li:not(:last-child) {
-  border-bottom: 1px solid #e2e8f0;
 }
 
 /* BUILD GRID */
@@ -166,7 +163,7 @@ p {
   border: 1px solid #cbd5e1;
 }
 
-/* FORM WRAPPER (match cards) */
+/* FORM WRAPPER */
 .customer-form-wrapper {
   margin-top: 70px;
   background: white;
@@ -175,7 +172,7 @@ p {
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
-/* FORM LAYOUT */
+/* FORM */
 .customer-form {
   display: flex;
   flex-direction: column;
@@ -188,7 +185,7 @@ p {
   gap: 20px;
 }
 
-/* INPUT GROUP */
+/* GROUP */
 .form-group {
   flex: 1;
   display: flex;
@@ -200,7 +197,6 @@ p {
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 6px;
-  color: #0f172a;
 }
 
 /* INPUT */
@@ -209,7 +205,6 @@ p {
   border: 1px solid #cbd5e1;
   border-radius: 10px;
   font-size: 1rem;
-  transition: 0.2s ease;
 }
 
 /* INPUT FOCUS */
@@ -272,17 +267,4 @@ footer {
   .form-row {
     flex-direction: column;
   }
-}
-.package-list {
-  list-style: none;
-  padding: 0;
-  margin: 15px auto;
-  text-align: center;
-}
-
-.package-list li {
-  margin: 6px 0;
-}
-.package-list li::before {
-  content: none !important;
 }
