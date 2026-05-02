@@ -273,16 +273,16 @@ footer {
     flex-direction: column;
   }
 }
-ul.package-list {
-  list-style: none !important;
-  padding-left: 0 !important;
-  margin-left: 0 !important;
+.package-list {
+  list-style: none;
+  padding: 0;
+  margin: 15px auto;
+  text-align: center;
 }
 
-ul.package-list li {
-  list-style: none !important;
+.package-list li {
+  margin: 6px 0;
 }
-
-ul.package-list li::marker {
-  content: "" !important;
+.package-list li::before {
+  content: none !important;
 }
