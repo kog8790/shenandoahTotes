@@ -28,7 +28,6 @@
 
       <div class="package-grid">
 
-        <!-- LIGHT -->
         <div class="package-card">
           <h3>Light Move</h3>
           <ul class="package-list">
@@ -40,7 +39,6 @@
           <p>$49</p>
         </div>
 
-        <!-- FAMILY -->
         <div class="package-card featured">
           <h3>Family Move</h3>
           <ul class="package-list">
@@ -53,7 +51,6 @@
           <p>$99</p>
         </div>
 
-        <!-- FULL -->
         <div class="package-card">
           <h3>Full House Move</h3>
           <ul class="package-list">
@@ -115,14 +112,14 @@
 
       </div>
 
-      <!-- BOOK BUTTON -->
+      <!-- BOOK BUTTON (now triggers modal) -->
       <div class="build-cta">
-        <a href="#customerForm" class="btn">Book Now</a>
+        <button id="bookNowBtn" class="btn" type="button">Book Now</button>
       </div>
     </div>
 
     <!-- FORM -->
-    <div class="customer-form-wrapper" id="customerForm">
+    <div class="customer-form-wrapper">
       <form id="bookingForm" class="customer-form">
 
         <h2>Reservation Details</h2>
@@ -177,94 +174,34 @@
           <p>Total: $<span id="orderTotal">0</span></p>
         </div>
 
-        <!-- PAYPAL -->
-        <div class="payment-section">
-          <h3>Secure Checkout</h3>
-          <div id="paypal-button-container"></div>
-        </div>
-
       </form>
     </div>
 
   </div>
 
-  <!-- PAYPAL SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
+  <!-- ========================= -->
+  <!-- 💳 DEPOSIT MODAL -->
+  <!-- ========================= -->
+  <div id="depositModal" class="modal">
 
-  <!-- SCRIPT -->
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
+    <div class="modal-content">
 
-    const classic = document.getElementById("classicTotes");
-    const wheeled = document.getElementById("wheeledTotes");
-    const dollies = document.getElementById("dollies");
-    const mattress = document.getElementById("mattressBags");
+      <span class="close">&times;</span>
 
-    const totalEl = document.getElementById("orderTotal");
-    const summary = document.getElementById("summaryDetails");
+      <h2>Secure Your Booking</h2>
+      <p>You only pay a 50% deposit today.</p>
 
-    function updateTotal() {
-      const total =
-        (parseInt(classic.value) * 2) +
-        (parseInt(wheeled.value) * 5) +
-        (parseInt(dollies.value) * 10) +
-        (parseInt(mattress.value) * 3);
+      <div class="deposit-summary">
+        <p>Total: $<span id="modalTotal">0</span></p>
+        <p><strong>Deposit Due Now: $<span id="depositAmount">0</span></strong></p>
+      </div>
 
-      totalEl.textContent = total;
+      <!-- PayPal will render here -->
+      <div id="paypal-modal-container"></div>
 
-      summary.innerHTML = `
-        Classic: ${classic.value}<br>
-        Wheeled: ${wheeled.value}<br>
-        Dollies: ${dollies.value}<br>
-        Mattress: ${mattress.value}
-      `;
-    }
+    </div>
 
-    document.getElementById("lightMoveBtn").onclick = function () {
-      classic.value = "10";
-      wheeled.value = "1";
-      dollies.value = "0";
-      mattress.value = "1";
-      totalEl.textContent = 49;
-      updateTotal();
-    };
-
-    document.getElementById("familyMoveBtn").onclick = function () {
-      classic.value = "20";
-      wheeled.value = "2";
-      dollies.value = "1";
-      mattress.value = "2";
-      totalEl.textContent = 99;
-      updateTotal();
-    };
-
-    document.getElementById("fullMoveBtn").onclick = function () {
-      classic.value = "30";
-      wheeled.value = "4";
-      dollies.value = "1";
-      mattress.value = "4";
-      totalEl.textContent = 159;
-      updateTotal();
-    };
-
-    [classic, wheeled, dollies, mattress].forEach(el => {
-      el.addEventListener("change", updateTotal);
-    });
-
-    if (window.paypal) {
-      paypal.Buttons({
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: { value: totalEl.textContent || "0" }
-            }]
-          });
-        }
-      }).render('#paypal-button-container');
-    }
-
-  });
-  </script>
+  </div>
 
 </body>
 </html>
