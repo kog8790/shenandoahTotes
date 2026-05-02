@@ -282,3 +282,8 @@ ul.package-list {
 ul.package-list li {
   list-style: none !important;
 }
+ul.package-list li::marker {
+
+  content: "" !important;
+
+}
