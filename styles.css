@@ -120,7 +120,7 @@ p {
   border: 2px solid #1d4ed8;
 }
 
-/* ✅ PACKAGE LIST FIXED */
+/* PACKAGE LIST (NO BULLETS) */
 .package-list {
   list-style: none;
   padding: 0;
@@ -160,6 +160,19 @@ p {
   padding: 12px;
   border-radius: 10px;
   border: 1px solid #cbd5e1;
+}
+
+/* BOOK CTA */
+.build-cta {
+  margin-top: 30px;
+}
+
+/* 🔥 DEPOSIT NOTE (PROMINENT) */
+.deposit-note {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #1d4ed8;
+  font-weight: 600;
 }
 
 /* FORM WRAPPER */
@@ -234,15 +247,8 @@ p {
   margin-top: 10px;
 }
 
-/* FOOTER */
-footer {
-  margin-top: 60px;
-  font-size: 0.9rem;
-  color: #64748b;
-}
-
 /* ========================= */
-/* 💳 MODAL STYLES */
+/* 💳 MODAL */
 /* ========================= */
 
 /* BACKDROP */
@@ -290,13 +296,20 @@ footer {
   font-size: 1.2rem;
 }
 
-/* PAYPAL IN MODAL */
+/* PAYPAL CONTAINER IN MODAL */
 #paypal-modal-container {
   margin-top: 15px;
   width: 100%;
   max-width: 350px;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* FOOTER */
+footer {
+  margin-top: 60px;
+  font-size: 0.9rem;
+  color: #64748b;
 }
 
 /* MOBILE */
