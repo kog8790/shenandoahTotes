@@ -9,80 +9,71 @@
   
 <body>
 
-  <!-- HERO (FULL WIDTH) -->
+  <!-- HERO -->
   <div class="hero">
     <img src="logo.png" class="logo" alt="Shenandoah Tote Rental Logo">
   </div>
 
   <hr>
 
-  <!-- MAIN CONTENT -->
   <div class="container">
 
     <!-- HEADER -->
     <h1>Shenandoah Tote Rental</h1>
     <p>A cleaner, easier way to move in the Shenandoah Valley.</p>
 
-    <!-- FEATURED MOVE PACKAGES -->
+    <!-- PACKAGES -->
     <div class="section">
       <h2>Choose Your Move Size</h2>
-      <p>Start with a package or build your own below.</p>
 
       <div class="package-grid">
+
         <div class="package-card">
           <h3>Light Move</h3>
-          <p class="package-subtext">Great for studios, dorms, and smaller apartment moves.</p>
-          <ul class="package-list">
+          <ul>
             <li>10 Classic Totes</li>
             <li>1 Wheeled Tote</li>
             <li>1 Mattress Bag</li>
-            <li>Ideal for lighter moves</li>
           </ul>
-          <div class="package-bottom">
-            <button id="lightMoveBtn" class="btn package-btn" type="button">Choose Light Move</button>
-            <p class="package-price">$49</p>
-          </div>
+          <button id="lightMoveBtn" class="btn" type="button">Choose</button>
+          <p>$49</p>
         </div>
 
         <div class="package-card featured">
           <h3>Family Move</h3>
-          <p class="package-subtext">A balanced setup for typical family homes and local moves.</p>
-          <ul class="package-list">
+          <ul>
             <li>20 Classic Totes</li>
             <li>2 Wheeled Totes</li>
             <li>1 Dolly</li>
-            <li>2 Mattress Bag</li>
+            <li>2 Mattress Bags</li>
           </ul>
-          <div class="package-bottom">
-            <button id="familyMoveBtn" class="btn package-btn" type="button">Choose Family Move</button>
-            <p class="package-price">$99</p>
-          </div>
+          <button id="familyMoveBtn" class="btn" type="button">Choose</button>
+          <p>$99</p>
         </div>
 
         <div class="package-card">
           <h3>Full House Move</h3>
-          <p class="package-subtext">Best for larger homes, bigger households, and fuller moves.</p>
-          <ul class="package-list">
+          <ul>
             <li>30 Classic Totes</li>
             <li>4 Wheeled Totes</li>
             <li>1 Dolly</li>
-            <li>4 Mattress Bag</li>
+            <li>4 Mattress Bags</li>
           </ul>
-          <div class="package-bottom">
-            <button id="fullMoveBtn" class="btn package-btn" type="button">Choose Full House Move</button>
-            <p class="package-price">$159</p>
-          </div>
+          <button id="fullMoveBtn" class="btn" type="button">Choose</button>
+          <p>$159</p>
         </div>
+
       </div>
     </div>
 
-    <!-- BUILD YOUR OWN -->
-    <div class="build-section section">
+    <!-- BUILD -->
+    <div class="section">
       <h2>Build Your Own</h2>
 
       <div class="build-grid">
+
         <div class="item-row">
-          <label for="classicTotes">Classic Tote</label>
+          <label>Classic Tote</label>
           <select id="classicTotes">
             <option value="0">0</option>
             <option value="10">10</option>
@@ -92,7 +83,7 @@
         </div>
 
         <div class="item-row">
-          <label for="wheeledTotes">Wheeled Tote</label>
+          <label>Wheeled Tote</label>
           <select id="wheeledTotes">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -102,7 +93,7 @@
         </div>
 
         <div class="item-row">
-          <label for="dollies">Dolly</label>
+          <label>Dolly</label>
           <select id="dollies">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -110,7 +101,7 @@
         </div>
 
         <div class="item-row">
-          <label for="mattressBags">Mattress Bag</label>
+          <label>Mattress Bag</label>
           <select id="mattressBags">
             <option value="0">0</option>
             <option value="1">1</option>
@@ -118,83 +109,73 @@
             <option value="4">4</option>
           </select>
         </div>
+
+      </div>
+
+      <!-- BOOK BUTTON -->
+      <div class="build-cta">
+        <a href="#customerForm" class="btn">Book Now</a>
       </div>
     </div>
-<div class="build-cta">
-  <form id="bookingForm" class="customer-form">
 
-  <div class="form-row">
-    <div class="form-group">
-      <label>Full Name</label>
-      <input type="text" required>
-    </div>
-
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" required>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group">
-      <label>Phone</label>
-      <input type="tel" required>
-    </div>
-
-    <div class="form-group">
-      <label>Drop-Off Date</label>
-      <input type="date" required>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group">
-      <label>Pick-Up Date</label>
-      <input type="date" required>
-    </div>
-
-    <div class="form-group">
-      <label>Drop-Off Address</label>
-      <input type="text" required>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group full-width">
-      <label>Pick-Up Address</label>
-      <input type="text" required>
-    </div>
-  </div>
-
-  <!-- SUMMARY -->
-  <div class="order-summary full-width">
-    <h3>Your Reservation Summary</h3>
-    <div id="summaryDetails"></div>
-    <p class="total">Total: $<span id="orderTotal">0</span></p>
-  </div>
-
-  <!-- PAYPAL -->
-  <div class="payment-section full-width">
-    <h3>Secure Checkout</h3>
-    <div id="paypal-button-container"></div>
-  </div>
-
-</form>
-  </form>
-</div>
     <!-- FORM -->
     <div class="customer-form-wrapper" id="customerForm">
       <form id="bookingForm" class="customer-form">
 
+        <h2>Reservation Details</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" required>
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" required>
+          </div>
+
+          <div class="form-group">
+            <label>Drop-Off Date</label>
+            <input type="date" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Pick-Up Date</label>
+            <input type="date" required>
+          </div>
+
+          <div class="form-group">
+            <label>Drop-Off Address</label>
+            <input type="text" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label>Pick-Up Address</label>
+            <input type="text" required>
+          </div>
+        </div>
+
         <!-- SUMMARY -->
-        <div class="order-summary full-width">
+        <div class="order-summary">
           <h3>Your Reservation Summary</h3>
           <div id="summaryDetails"></div>
-          <p class="total">Total: $<span id="orderTotal">0</span></p>
+          <p>Total: $<span id="orderTotal">0</span></p>
         </div>
 
         <!-- PAYPAL -->
-        <div class="payment-section full-width">
+        <div class="payment-section">
           <h3>Secure Checkout</h3>
           <div id="paypal-button-container"></div>
         </div>
@@ -204,8 +185,10 @@
 
   </div>
 
-  <!-- PAYPAL -->
- <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
+  <!-- PAYPAL SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
+
+  <!-- SCRIPT -->
   <script>
   document.addEventListener("DOMContentLoaded", function () {
 
