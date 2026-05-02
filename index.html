@@ -112,9 +112,14 @@
 
       </div>
 
-      <!-- BOOK BUTTON (now triggers modal) -->
+      <!-- BOOK BUTTON -->
       <div class="build-cta">
         <button id="bookNowBtn" class="btn" type="button">Book Now</button>
+
+        <!-- ✅ DEPOSIT MESSAGE (PROMINENT) -->
+        <div class="deposit-note">
+          🔒 Only 50% due today • Remaining balance paid at pickup
+        </div>
       </div>
     </div>
 
@@ -196,12 +201,15 @@
         <p><strong>Deposit Due Now: $<span id="depositAmount">0</span></strong></p>
       </div>
 
-      <!-- PayPal will render here -->
+      <!-- PayPal renders here -->
       <div id="paypal-modal-container"></div>
 
     </div>
 
   </div>
+
+  <!-- ✅ PAYPAL SDK (REQUIRED) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
 
 </body>
 </html>
