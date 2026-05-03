@@ -1,269 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shenandoah Tote Rental</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Shenandoah Tote Rental</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
-  
+
 <body>
 
-  <!-- HERO -->
-  <div class="hero">
-    <img src="logo.png" class="logo" alt="Shenandoah Tote Rental Logo">
+<!-- HERO -->
+<div class="hero">
+  <img src="logo.png" class="logo" alt="Logo">
+</div>
+
+<hr>
+
+<div class="container">
+
+<h1>Shenandoah Tote Rental</h1>
+<p>A cleaner, easier way to move in the Shenandoah Valley.</p>
+
+<!-- PACKAGES -->
+<div class="section">
+<h2>Choose Your Move Size</h2>
+
+<div class="package-grid">
+
+<!-- LIGHT -->
+<div class="package-card">
+  <div class="package-image">
+    <img src="tier1.jpg" alt="Light Move">
   </div>
 
-  <hr>
-
-  <div class="container">
-
-    <!-- HEADER -->
-    <h1>Shenandoah Tote Rental</h1>
-    <p>A cleaner, easier way to move in the Shenandoah Valley.</p>
-
-    <!-- PACKAGES -->
-    <div class="section">
-      <h2>Choose Your Move Size</h2>
-
-      <div class="package-grid">
- <div class="package-card">
   <h3>Light Move</h3>
+
   <ul class="package-list">
     <li>10 Classic Totes</li>
     <li>1 Mattress Bag</li>
   </ul>
-  <button id="lightMoveBtn" class="btn" type="button">Choose</button>
+
+  <button id="lightMoveBtn" class="btn">Choose</button>
   <p>$29.99</p>
 </div>
 
+<!-- FAMILY -->
 <div class="package-card featured">
+  <div class="package-image">
+    <img src="tier2.jpg" alt="Family Move">
+  </div>
+
   <h3>Family Move</h3>
+
   <ul class="package-list">
     <li>20 Classic Totes</li>
     <li>1 Wheeled Tote</li>
     <li>2 Mattress Bags</li>
     <li>1 Dolly</li>
   </ul>
-  <button id="familyMoveBtn" class="btn" type="button">Choose</button>
+
+  <button id="familyMoveBtn" class="btn">Choose</button>
   <p>$74.99</p>
 </div>
 
+<!-- FULL -->
 <div class="package-card">
+  <div class="package-image">
+    <img src="tier3.jpg" alt="Full Move">
+  </div>
+
   <h3>Full House Move</h3>
+
   <ul class="package-list">
     <li>30 Classic Totes</li>
     <li>2 Wheeled Totes</li>
     <li>4 Mattress Bags</li>
     <li>1 Dolly</li>
   </ul>
-  <button id="fullMoveBtn" class="btn" type="button">Choose</button>
+
+  <button id="fullMoveBtn" class="btn">Choose</button>
   <p>$119.99</p>
 </div>
-        
 
-      </div>
-    </div>
+</div>
+</div>
 
-    <!-- BUILD -->
-    <div class="section">
-      <h2>Build Your Own</h2>
+<!-- BUILD -->
+<div class="section">
+<h2>Build Your Own</h2>
 
-      <div class="build-grid">
+<div class="build-grid">
 
-        <div class="item-row">
-          <label>Classic Tote</label>
-          <select id="classicTotes">
-            <option value="0">0</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
-        </div>
+<div class="item-row">
+<label>Classic Tote</label>
+<select id="classicTotes">
+<option value="0">0</option>
+<option value="10">10</option>
+<option value="20">20</option>
+<option value="30">30</option>
+</select>
+</div>
 
-        <div class="item-row">
-          <label>Wheeled Tote</label>
-          <select id="wheeledTotes">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-          </select>
-        </div>
+<div class="item-row">
+<label>Wheeled Tote</label>
+<select id="wheeledTotes">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="4">4</option>
+</select>
+</div>
 
-        <div class="item-row">
-          <label>Dolly</label>
-          <select id="dollies">
-            <option value="0">0</option>
-            <option value="1">1</option>
-          </select>
-        </div>
+<div class="item-row">
+<label>Dolly</label>
+<select id="dollies">
+<option value="0">0</option>
+<option value="1">1</option>
+</select>
+</div>
 
-        <div class="item-row">
-          <label>Mattress Bag</label>
-          <select id="mattressBags">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-          </select>
-        </div>
+<div class="item-row">
+<label>Mattress Bag</label>
+<select id="mattressBags">
+<option value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="4">4</option>
+</select>
+</div>
 
-      </div>
+</div>
 
-      <!-- BOOK BUTTON -->
-      <div class="build-cta">
-        <button id="bookNowBtn" class="btn" type="button">Book Now</button>
-        <div class="deposit-note">
-          🔒 Only 50% due today • Remaining balance paid at pickup
-        </div>
-      </div>
-    </div>
+<div class="build-cta">
+<button id="bookNowBtn" class="btn">Book Now</button>
+<div class="deposit-note">
+🔒 Only 50% due today • Remaining paid at pickup
+</div>
+</div>
+</div>
 
-    <!-- FORM -->
-    <div class="customer-form-wrapper">
-      <form id="bookingForm" class="customer-form">
+<!-- FORM -->
+<div class="customer-form-wrapper">
+<form class="customer-form">
 
-        <h2>Reservation Details</h2>
+<h2>Reservation Details</h2>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <input id="fullName" type="text" required>
-          </div>
+<input id="fullName" placeholder="Full Name" required>
+<input id="email" type="email" placeholder="Email" required>
+<input id="phone" placeholder="Phone" required>
+<input id="startDate" type="date" required>
+<input id="endDate" type="date" required>
+<input id="dropoffAddress" placeholder="Drop-Off Address" required>
+<input id="pickupAddress" placeholder="Pick-Up Address" required>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="email" required>
-          </div>
-        </div>
+<div class="order-summary">
+<h3>Your Reservation Summary</h3>
+<div id="summaryDetails"></div>
+<p>Total: $<span id="orderTotal">0</span></p>
+</div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input id="phone" type="tel" required>
-          </div>
+</form>
+</div>
 
-          <div class="form-group">
-            <label for="startDate">Drop-Off Date</label>
-            <input id="startDate" type="date" required>
-          </div>
-        </div>
+</div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="endDate">Pick-Up Date</label>
-            <input id="endDate" type="date" required>
-          </div>
+<!-- MODAL -->
+<div id="depositModal" class="modal">
+<div class="modal-content">
+<span class="close">&times;</span>
 
-          <div class="form-group">
-            <label for="dropoffAddress">Drop-Off Address</label>
-            <input id="dropoffAddress" type="text" required>
-          </div>
-        </div>
+<h2>Secure Your Booking</h2>
+<p>You only pay 50% today</p>
 
-        <div class="form-row">
-          <div class="form-group full-width">
-            <label for="pickupAddress">Pick-Up Address</label>
-            <input id="pickupAddress" type="text" required>
-          </div>
-        </div>
+<p>Total: $<span id="modalTotal">0</span></p>
+<p><strong>Deposit: $<span id="depositAmount">0</span></strong></p>
 
-        <!-- SUMMARY -->
-        <div class="order-summary">
-          <h3>Your Reservation Summary</h3>
-          <div id="summaryDetails"></div>
-          <p>Total: $<span id="orderTotal">0</span></p>
-        </div>
+<div id="paypal-modal-container"></div>
 
-      </form>
-    </div>
+</div>
+</div>
 
-  </div>
+<!-- PAYPAL SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
 
-  <!-- MODAL -->
-  <div id="depositModal" class="modal">
-    <div class="modal-content">
+<!-- SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-      <span class="close">&times;</span>
+const classic = document.getElementById("classicTotes");
+const wheeled = document.getElementById("wheeledTotes");
+const dollies = document.getElementById("dollies");
+const mattress = document.getElementById("mattressBags");
 
-      <h2>Secure Your Booking</h2>
-      <p>You only pay a 50% deposit today.</p>
+const totalEl = document.getElementById("orderTotal");
+const summary = document.getElementById("summaryDetails");
 
-      <div class="deposit-summary">
-        <p>Total: $<span id="modalTotal">0</span></p>
-        <p><strong>Deposit Due Now: $<span id="depositAmount">0</span></strong></p>
-      </div>
+const modal = document.getElementById("depositModal");
+const modalTotal = document.getElementById("modalTotal");
+const depositAmount = document.getElementById("depositAmount");
 
-      <div id="paypal-modal-container"></div>
+function updateTotal() {
+const total =
+(classic.value * 2) +
+(wheeled.value * 5) +
+(dollies.value * 10) +
+(mattress.value * 3);
 
-    </div>
-  </div>
+totalEl.textContent = total;
 
-  <!-- PAYPAL SDK -->
-  <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
+summary.innerHTML = `
+Classic: ${classic.value}<br>
+Wheeled: ${wheeled.value}<br>
+Dollies: ${dollies.value}<br>
+Mattress: ${mattress.value}
+`;
+}
 
-  <!-- SCRIPT -->
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
+// FIXED PACKAGE BUTTONS
+document.getElementById("lightMoveBtn").onclick = () => {
+classic.value = 10;
+wheeled.value = 0;
+dollies.value = 0;
+mattress.value = 1;
+updateTotal();
+};
 
-    const classic = document.getElementById("classicTotes");
-    const wheeled = document.getElementById("wheeledTotes");
-    const dollies = document.getElementById("dollies");
-    const mattress = document.getElementById("mattressBags");
+document.getElementById("familyMoveBtn").onclick = () => {
+classic.value = 20;
+wheeled.value = 1;
+dollies.value = 1;
+mattress.value = 2;
+updateTotal();
+};
 
-    const totalEl = document.getElementById("orderTotal");
-    const summary = document.getElementById("summaryDetails");
+document.getElementById("fullMoveBtn").onclick = () => {
+classic.value = 30;
+wheeled.value = 2;
+dollies.value = 1;
+mattress.value = 4;
+updateTotal();
+};
 
-    const modal = document.getElementById("depositModal");
-    const modalTotal = document.getElementById("modalTotal");
-    const depositAmount = document.getElementById("depositAmount");
+[classic, wheeled, dollies, mattress].forEach(el => {
+el.addEventListener("change", updateTotal);
+});
 
-    function updateTotal() {
-      const total =
-        (parseInt(classic.value) * 2) +
-        (parseInt(wheeled.value) * 5) +
-        (parseInt(dollies.value) * 10) +
-        (parseInt(mattress.value) * 3);
+// BOOK NOW → MODAL + PAYPAL
+document.getElementById("bookNowBtn").onclick = function () {
 
-      totalEl.textContent = total;
+const total = parseFloat(totalEl.textContent) || 0;
+const deposit = (total / 2).toFixed(2);
 
-      summary.innerHTML = `
-        Classic: ${classic.value}<br>
-        Wheeled: ${wheeled.value}<br>
-        Dollies: ${dollies.value}<br>
-        Mattress: ${mattress.value}
-      `;
-    }
+modalTotal.textContent = total;
+depositAmount.textContent = deposit;
 
-    document.getElementById("lightMoveBtn").onclick = () => {
-      classic.value = "10"; wheeled.value = "1"; dollies.value = "0"; mattress.value = "1";
-      updateTotal();
-    };
+modal.style.display = "flex";
 
-    document.getElementById("familyMoveBtn").onclick = () => {
-      classic.value = "20"; wheeled.value = "2"; dollies.value = "1"; mattress.value = "2";
-      updateTotal();
-    };
+// CLEAR OLD BUTTON
+document.getElementById("paypal-modal-container").innerHTML = "";
 
-    document.getElementById("fullMoveBtn").onclick = () => {
-      classic.value = "30"; wheeled.value = "4"; dollies.value = "1"; mattress.value = "4";
-      updateTotal();
-    };
+// RENDER PAYPAL
+paypal.Buttons({
+createOrder: function(data, actions) {
+return actions.order.create({
+purchase_units: [{
+amount: { value: deposit }
+}]
+});
+}
+}).render('#paypal-modal-container');
 
-    [classic, wheeled, dollies, mattress].forEach(el => {
-      el.addEventListener("change", updateTotal);
-    });
+};
 
-    document.getElementById("bookNowBtn").onclick = function () {
-      const total = parseFloat(totalEl.textContent) || 0;
-      const deposit = (total / 2).toFixed(2);
+// CLOSE MODAL
+document.querySelector(".close").onclick = () => {
+modal.style.display = "none";
+};
 
-      modalTotal.textContent = total;
-      depositAmount.textContent = deposit;
+});
+</script>
 
-      modal.style.display = "flex";
-
-      document.getElementById("paypal-modal-container").innerHTML = "";
-
-    
+</body>
+</html>
