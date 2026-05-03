@@ -266,20 +266,4 @@
 
       document.getElementById("paypal-modal-container").innerHTML = "";
 
-      paypal.Buttons({
-        createOrder: (data, actions) => {
-          return actions.order.create({
-            purchase_units: [{ amount: { value: deposit } }]
-          });
-        }
-      }).render('#paypal-modal-container');
-    };
-
-    document.querySelector(".close").onclick = () => modal.style.display = "none";
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
-
-  });
-  </script>
-
-</body>
-</html>
+    
