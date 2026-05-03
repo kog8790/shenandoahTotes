@@ -10,9 +10,7 @@ const toteMap = {
 async function checkAvailability(data) {
   const response = await fetch("/.netlify/functions/check-availability", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   });
 
@@ -22,9 +20,7 @@ async function checkAvailability(data) {
 async function createBooking(data) {
   const response = await fetch("/.netlify/functions/create-booking", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   });
 
@@ -36,6 +32,24 @@ async function createReservation(data) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
+  });
+
+  return await res.json();
+}
+
+async function getReservation(id) {
+  const res = await fetch("/.netlify/functions/get-reservation", {
+    method: "POST",
+    body: JSON.stringify({ id })
+  });
+
+  return await res.json();
+}
+
+async function updateReservation(id, fields) {
+  const res = await fetch("/.netlify/functions/update-reservation", {
+    method: "POST",
+    body: JSON.stringify({ id, fields })
   });
 
   return await res.json();
@@ -93,23 +107,23 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Dolly", qty: Number(document.getElementById("dollies").value) },
       { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) },
     ];
-    
+
     // ===== CHECK AVAILABILITY =====
     const availability = await checkAvailability({
       startDate: start,
       endDate: end,
       items
     });
-    
+
     if (!availability.available) {
       const message = availability.conflicts
         .map(c => `${c.item}: requested ${c.requested}, available ${c.available}`)
         .join("\n");
-    
+
       alert("Some items are not available:\n\n" + message);
       return;
     }
-    
+
     // ===== CREATE RESERVATION =====
     const reservation = await createReservation({
       "Customer Name": name,
@@ -125,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const reservationId = reservation.id;
 
-    // Guard
     if (!reservationId) {
       alert("Reservation failed. Check console.");
       console.error("Invalid reservation response:", reservation);
@@ -155,32 +168,66 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // ===== DELIVERY FEE LOGIC =====
-    const reservationData = await fetch("/.netlify/functions/get-reservation", {
-      method: "POST",
-      body: JSON.stringify({ id: reservationId })
-    }).then(res => res.json());
-    
-    const total = reservationData.fields["Total Invoice"];
-    
-    if (total < 29) {
-      await fetch("/.netlify/functions/update-reservation", {
-        method: "POST",
-        body: JSON.stringify({
-          id: reservationId,
-          fields: {
-            "Delivery Fee": 25
-          }
-        })
-      });
+    if (successCount === 0) {
+      alert("Something went wrong. No bookings were created.");
+      return;
     }
 
-    // ===== RESULT =====
-    if (successCount > 0) {
-      alert("Reservation submitted!");
-    } else {
-      alert("Something went wrong. No bookings were created.");
+    // ===== DELIVERY FEE LOGIC =====
+    let reservationData = await getReservation(reservationId);
+    let total = Number(reservationData.fields["Total Invoice"] || 0);
+
+    if (total < 29) {
+      await updateReservation(reservationId, {
+        "Delivery Fee": 25
+      });
+
+      // Re-fetch after delivery fee update so PayPal charges final total
+      reservationData = await getReservation(reservationId);
+      total = Number(reservationData.fields["Total Invoice"] || 0);
     }
+
+    if (!total || total <= 0) {
+      alert("Could not calculate order total. Please contact support.");
+      console.error("Invalid total:", reservationData);
+      return;
+    }
+
+    // ===== PAYPAL PAYMENT =====
+    const paypalContainer = document.getElementById("paypal-button-container");
+    paypalContainer.innerHTML = "";
+
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            amount: {
+              value: total.toFixed(2)
+            }
+          }]
+        });
+      },
+
+      onApprove: async function(data, actions) {
+        const details = await actions.order.capture();
+
+        console.log("PayPal payment successful:", details);
+
+        await updateReservation(reservationId, {
+          "Paid": true
+        });
+
+        alert("Payment successful! Reservation confirmed.");
+      },
+
+      onError: function(err) {
+        console.error("PayPal error:", err);
+        alert("Payment failed. Please try again or contact support.");
+      }
+
+    }).render("#paypal-button-container");
+
+    alert("Availability confirmed. Please complete payment to confirm your reservation.");
   });
 
 });
