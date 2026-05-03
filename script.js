@@ -3,7 +3,7 @@ const toteMap = {
   "Classic Tote": "recmOKV978UHpmWQj",
   "Wheeled Tote": "recQJlrDosM8nbILD",
   "Dolly": "recNf9ULXY9Glf0nk",
-  "Mattress Bag": "recJabXU9XtVUtcgz"
+  "Mattress Bag": "recJabXU9XtVUtcgz",
 };
 
 // ===== FUNCTIONS =====
@@ -86,6 +86,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const DOA = document.getElementById("dropoffAddress").value;
     const notes = document.getElementById("notes").value;
 
+    // ===== ITEMS =====
+    const items = [
+      { name: "Classic Tote", qty: Number(document.getElementById("classicTotes").value) },
+      { name: "Wheeled Tote", qty: Number(document.getElementById("wheeledTotes").value) },
+      { name: "Dolly", qty: Number(document.getElementById("dollies").value) },
+      { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) },
+    ];
+    
+    // ===== CHECK AVAILABILITY =====
+    const availability = await checkAvailability({
+      startDate: start,
+      endDate: end,
+      items
+    });
+    
+    if (!availability.available) {
+      const message = availability.conflicts
+        .map(c => `${c.item}: requested ${c.requested}, available ${c.available}`)
+        .join("\n");
+    
+      alert("Some items are not available:\n\n" + message);
+      return;
+    }
+    
     // ===== CREATE RESERVATION =====
     const reservation = await createReservation({
       "Customer Name": name,
@@ -106,14 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Invalid reservation response:", reservation);
       return;
     }
-
-    // ===== ITEMS =====
-    const items = [
-      { name: "Classic Tote", qty: Number(document.getElementById("classicTotes").value) },
-      { name: "Wheeled Tote", qty: Number(document.getElementById("wheeledTotes").value) },
-      { name: "Dolly", qty: Number(document.getElementById("dollies").value) },
-      { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) }
-    ];
 
     // ===== CREATE BOOKINGS =====
     let successCount = 0;
