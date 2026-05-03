@@ -154,6 +154,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // ===== DELIVERY FEE LOGIC =====
+    const reservationData = await fetch("/.netlify/functions/get-reservation", {
+      method: "POST",
+      body: JSON.stringify({ id: reservationId })
+    }).then(res => res.json());
+    
+    const total = reservationData.fields["Total Invoice"];
+    
+    if (total < 29) {
+      await fetch("/.netlify/functions/update-reservation", {
+        method: "POST",
+        body: JSON.stringify({
+          id: reservationId,
+          fields: {
+            "Delivery Fee": 25
+          }
+        })
+      });
+    }
+
     // ===== RESULT =====
     if (successCount > 0) {
       alert("Reservation submitted!");
