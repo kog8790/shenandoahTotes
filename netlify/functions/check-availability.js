@@ -61,6 +61,10 @@ export async function handler(event) {
         const status = fields["Status"];
         if (status === "Cancelled") continue;
 
+        // Only paid reservations/bookings should block inventory
+        const paid = fields["Paid"];
+        if (!paid) continue;
+
         const bookingToteIds = fields["Tote Type"] || [];
         const sameTote = bookingToteIds.includes(tote.id);
 
