@@ -117,7 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "Phone": phone,
       "Drop Off Address": DOA,
       "Pick Up Address": POA,
-      "Notes": notes
+      "Notes": notes,
+      "Paid": false
     });
 
     console.log("reservation response:", reservation);
