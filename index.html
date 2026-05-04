@@ -30,7 +30,7 @@
 <!-- LIGHT -->
 <div class="package-card">
   <div class="package-image">
-    <img src="tier-package-light.png" alt="Light Move">
+    <img src="tote-package-light.jpg" alt="Light Move">
   </div>
 
   <h3>Light Move</h3>
@@ -47,7 +47,7 @@
 <!-- FAMILY -->
 <div class="package-card featured">
   <div class="package-image">
-    <img src="tier-package-family.png" alt="Family Move">
+    <img src="tote-package-family.jpg" alt="Family Move">
   </div>
 
   <h3>Family Move</h3>
@@ -66,7 +66,7 @@
 <!-- FULL -->
 <div class="package-card">
   <div class="package-image">
-    <img src="tier-package-full.png" alt="Full Move">
+    <img src="tote-package-full.jpg" alt="Full Move">
   </div>
 
   <h3>Full House Move</h3>
@@ -216,7 +216,7 @@ Mattress: ${mattress.value}
 `;
 }
 
-// PACKAGE BUTTONS (NOW MATCH YOUR PRICING)
+// BUTTONS
 document.getElementById("lightMoveBtn").onclick = () => {
 classic.value = 10;
 wheeled.value = 0;
@@ -245,7 +245,7 @@ updateTotal();
 el.addEventListener("change", updateTotal);
 });
 
-// BOOK NOW → MODAL + PAYPAL
+// MODAL + PAYPAL
 document.getElementById("bookNowBtn").onclick = function () {
 
 const total = parseFloat(totalEl.textContent) || 0;
@@ -270,7 +270,7 @@ amount: { value: deposit }
 
 };
 
-// CLOSE MODAL
+// CLOSE
 document.querySelector(".close").onclick = () => {
 modal.style.display = "none";
 };
