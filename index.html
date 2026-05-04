@@ -30,7 +30,7 @@
 <!-- LIGHT -->
 <div class="package-card">
   <div class="package-image">
-    <img src="tier1.jpg" alt="Light Move">
+    <img src="tier-package-light.png" alt="Light Move">
   </div>
 
   <h3>Light Move</h3>
@@ -40,14 +40,14 @@
     <li>1 Mattress Bag</li>
   </ul>
 
-  <button id="lightMoveBtn" class="btn">Choose</button>
+  <button id="lightMoveBtn" class="btn" type="button">Choose</button>
   <p>$29.99</p>
 </div>
 
 <!-- FAMILY -->
 <div class="package-card featured">
   <div class="package-image">
-    <img src="tier2.jpg" alt="Family Move">
+    <img src="tier-package-family.png" alt="Family Move">
   </div>
 
   <h3>Family Move</h3>
@@ -59,14 +59,14 @@
     <li>1 Dolly</li>
   </ul>
 
-  <button id="familyMoveBtn" class="btn">Choose</button>
+  <button id="familyMoveBtn" class="btn" type="button">Choose</button>
   <p>$74.99</p>
 </div>
 
 <!-- FULL -->
 <div class="package-card">
   <div class="package-image">
-    <img src="tier3.jpg" alt="Full Move">
+    <img src="tier-package-full.png" alt="Full Move">
   </div>
 
   <h3>Full House Move</h3>
@@ -78,7 +78,7 @@
     <li>1 Dolly</li>
   </ul>
 
-  <button id="fullMoveBtn" class="btn">Choose</button>
+  <button id="fullMoveBtn" class="btn" type="button">Choose</button>
   <p>$119.99</p>
 </div>
 
@@ -132,7 +132,7 @@
 </div>
 
 <div class="build-cta">
-<button id="bookNowBtn" class="btn">Book Now</button>
+<button id="bookNowBtn" class="btn" type="button">Book Now</button>
 <div class="deposit-note">
 🔒 Only 50% due today • Remaining paid at pickup
 </div>
@@ -201,10 +201,10 @@ const depositAmount = document.getElementById("depositAmount");
 
 function updateTotal() {
 const total =
-(classic.value * 2) +
-(wheeled.value * 5) +
-(dollies.value * 10) +
-(mattress.value * 3);
+(parseInt(classic.value) * 2) +
+(parseInt(wheeled.value) * 5) +
+(parseInt(dollies.value) * 10) +
+(parseInt(mattress.value) * 3);
 
 totalEl.textContent = total;
 
@@ -216,7 +216,7 @@ Mattress: ${mattress.value}
 `;
 }
 
-// FIXED PACKAGE BUTTONS
+// PACKAGE BUTTONS (NOW MATCH YOUR PRICING)
 document.getElementById("lightMoveBtn").onclick = () => {
 classic.value = 10;
 wheeled.value = 0;
@@ -256,10 +256,8 @@ depositAmount.textContent = deposit;
 
 modal.style.display = "flex";
 
-// CLEAR OLD BUTTON
 document.getElementById("paypal-modal-container").innerHTML = "";
 
-// RENDER PAYPAL
 paypal.Buttons({
 createOrder: function(data, actions) {
 return actions.order.create({
