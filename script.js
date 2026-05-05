@@ -77,6 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
 
+  document.getElementById("bookNowBtn").addEventListener("click", () => {
+    document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+  });
+
   document.getElementById("fullMoveBtn").addEventListener("click", () => {
     document.getElementById("classicTotes").value = 30;
     document.getElementById("wheeledTotes").value = 4;
@@ -87,8 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ===== Submit Logic =====
-  document.getElementById("bookingForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  document.getElementById("submitReservationBtn").addEventListener("click", async () => {
 
     // ===== CUSTOMER INFO =====
     const name = document.getElementById("fullName").value;
@@ -194,8 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===== PAYPAL PAYMENT =====
-    const paypalContainer = document.getElementById("paypal-button-container");
+    const paypalContainer = document.getElementById("paypal-modal-container");
     paypalContainer.innerHTML = "";
+
+    document.getElementById("modalTotal").textContent = total.toFixed(2);
+    document.getElementById("depositModal").style.display = "flex";
 
     paypal.Buttons({
       createOrder: function(data, actions) {
@@ -225,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Payment failed. Please try again or contact support.");
       }
 
-    }).render("#paypal-button-container");
+    }).render("#paypal-modal-container");
 
     alert("Availability confirmed. Please complete payment to confirm your reservation.");
   });
