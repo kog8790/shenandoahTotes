@@ -74,10 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
       total = packagePricing[selectedPackage];
     } else {
       total =
-        (Number(document.getElementById("classicTotes").value) * 2) +
-        (Number(document.getElementById("wheeledTotes").value) * 5) +
+        (Number(document.getElementById("classicTotes").value) * 2.5) +
+        (Number(document.getElementById("wheeledTotes").value) * 9) +
         (Number(document.getElementById("dollies").value) * 10) +
-        (Number(document.getElementById("mattressBags").value) * 3);
+        (Number(document.getElementById("mattressBags").value) * 5);
     }
   
     document.getElementById("orderTotal").textContent = total.toFixed(2);
