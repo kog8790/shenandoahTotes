@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "Drop Off Address": DOA,
       "Pick Up Address": POA,
       "Notes": notes,
-      "Paid": false
+      "Invoice Paid": false
     });
 
     console.log("reservation response:", reservation);
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("PayPal payment successful:", details);
 
         await updateReservation(reservationId, {
-          "Paid": true
+          "Invoice Paid": true
         });
 
         alert("Payment successful! Reservation confirmed.");
