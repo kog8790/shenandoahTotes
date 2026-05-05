@@ -271,8 +271,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     }).render("#paypal-modal-container");
-
-    alert("Availability confirmed. Please complete payment to confirm your reservation.");
   });
 
 });
