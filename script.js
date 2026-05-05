@@ -114,11 +114,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
-
+  // ===== BOOK NOW BUTTON =====
   document.getElementById("bookNowBtn").addEventListener("click", () => {
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
-
+  // ===== MODAL CLOSE =====
+  document.querySelector(".close").addEventListener("click", () => {
+    document.getElementById("depositModal").style.display = "none";
+  });
+  // ===== MODAL BACKDROP CLICK CLOSE =====
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("depositModal");
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
   // ===== Submit Logic =====
   document.getElementById("submitReservationBtn").addEventListener("click", async () => {
 
