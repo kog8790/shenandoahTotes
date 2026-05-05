@@ -58,35 +58,64 @@ async function updateReservation(id, fields) {
 // ===== MAIN =====
 document.addEventListener("DOMContentLoaded", () => {
 
+  // ===== TOTAL / SUMMARY =====
+  function updateTotal() {
+    const total =
+      (Number(document.getElementById("classicTotes").value) * 2) +
+      (Number(document.getElementById("wheeledTotes").value) * 5) +
+      (Number(document.getElementById("dollies").value) * 10) +
+      (Number(document.getElementById("mattressBags").value) * 3);
+  
+    document.getElementById("orderTotal").textContent = total;
+  
+    document.getElementById("summaryDetails").innerHTML = `
+      Classic: ${document.getElementById("classicTotes").value}<br>
+      Wheeled: ${document.getElementById("wheeledTotes").value}<br>
+      Dollies: ${document.getElementById("dollies").value}<br>
+      Mattress: ${document.getElementById("mattressBags").value}
+    `;
+  }
+  
+  // bind dropdown changes
+  ["classicTotes", "wheeledTotes", "dollies", "mattressBags"].forEach(id => {
+    document.getElementById(id).addEventListener("change", updateTotal);
+  });
+
   // ===== Button Actions =====
   document.getElementById("lightMoveBtn").addEventListener("click", () => {
     document.getElementById("classicTotes").value = 10;
-    document.getElementById("wheeledTotes").value = 1;
+    document.getElementById("wheeledTotes").value = 0;
     document.getElementById("dollies").value = 0;
     document.getElementById("mattressBags").value = 1;
+
+    updateTotal();
 
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
 
   document.getElementById("familyMoveBtn").addEventListener("click", () => {
     document.getElementById("classicTotes").value = 20;
-    document.getElementById("wheeledTotes").value = 2;
+    document.getElementById("wheeledTotes").value = 1;
     document.getElementById("dollies").value = 1;
     document.getElementById("mattressBags").value = 2;
 
-    document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
-  });
+    updateTotal();
 
-  document.getElementById("bookNowBtn").addEventListener("click", () => {
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
 
   document.getElementById("fullMoveBtn").addEventListener("click", () => {
     document.getElementById("classicTotes").value = 30;
-    document.getElementById("wheeledTotes").value = 4;
+    document.getElementById("wheeledTotes").value = 2;
     document.getElementById("dollies").value = 1;
     document.getElementById("mattressBags").value = 4;
 
+    updateTotal();
+
+    document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
+  });
+
+  document.getElementById("bookNowBtn").addEventListener("click", () => {
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
 
