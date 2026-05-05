@@ -6,6 +6,14 @@ const toteMap = {
   "Mattress Bag": "recJabXU9XtVUtcgz",
 };
 
+const packagePricing = {
+  light: 29.99,
+  family: 74.99,
+  full: 119.99
+};
+
+let selectedPackage = null;
+
 // ===== FUNCTIONS =====
 async function checkAvailability(data) {
   const response = await fetch("/.netlify/functions/check-availability", {
@@ -60,13 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== TOTAL / SUMMARY =====
   function updateTotal() {
-    const total =
-      (Number(document.getElementById("classicTotes").value) * 2) +
-      (Number(document.getElementById("wheeledTotes").value) * 5) +
-      (Number(document.getElementById("dollies").value) * 10) +
-      (Number(document.getElementById("mattressBags").value) * 3);
+    let total;
   
-    document.getElementById("orderTotal").textContent = total;
+    if (selectedPackage && packagePricing[selectedPackage]) {
+      total = packagePricing[selectedPackage];
+    } else {
+      total =
+        (Number(document.getElementById("classicTotes").value) * 2) +
+        (Number(document.getElementById("wheeledTotes").value) * 5) +
+        (Number(document.getElementById("dollies").value) * 10) +
+        (Number(document.getElementById("mattressBags").value) * 3);
+    }
+  
+    document.getElementById("orderTotal").textContent = total.toFixed(2);
   
     document.getElementById("summaryDetails").innerHTML = `
       Classic: ${document.getElementById("classicTotes").value}<br>
@@ -78,7 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // bind dropdown changes
   ["classicTotes", "wheeledTotes", "dollies", "mattressBags"].forEach(id => {
-    document.getElementById(id).addEventListener("change", updateTotal);
+    document.getElementById(id).addEventListener("change", () => {
+      selectedPackage = null;
+      updateTotal();
+    });
   });
 
   // ===== Button Actions =====
@@ -88,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dollies").value = 0;
     document.getElementById("mattressBags").value = 1;
 
+    selectedPackage = "light";
     updateTotal();
 
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
@@ -99,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dollies").value = 1;
     document.getElementById("mattressBags").value = 2;
 
+    selectedPackage = "family";
     updateTotal();
 
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
@@ -110,6 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("dollies").value = 1;
     document.getElementById("mattressBags").value = 4;
 
+    selectedPackage = "full";
     updateTotal();
 
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
