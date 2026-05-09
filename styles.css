@@ -114,13 +114,39 @@ p {
   padding: 28px 22px;
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.package-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
 }
 
 .package-card.featured {
   border: 2px solid #1d4ed8;
 }
 
-/* PACKAGE LIST (NO BULLETS) */
+/* PACKAGE IMAGES */
+.package-image {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.package-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.package-card:hover .package-image img {
+  transform: scale(1.05);
+}
+
+/* PACKAGE LIST */
 .package-list {
   list-style: none;
   padding: 0;
@@ -157,17 +183,18 @@ p {
 
 .item-row select {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 14px;
+  border-radius: 12px;
   border: 1px solid #cbd5e1;
+  font-size: 1rem;
 }
 
-/* BOOK CTA */
+/* BUILD CTA */
 .build-cta {
   margin-top: 30px;
 }
 
-/* 🔥 DEPOSIT NOTE (PROMINENT) */
+/* DEPOSIT NOTE */
 .deposit-note {
   margin-top: 12px;
   font-size: 0.95rem;
@@ -175,68 +202,108 @@ p {
   font-weight: 600;
 }
 
-/* FORM WRAPPER */
-.customer-form-wrapper {
-  margin-top: 70px;
-  background: white;
-  padding: 32px 28px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+/* SERVICE AREA */
+.service-area-note {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #475569;
 }
 
-/* FORM */
+/* ========================= */
+/* ✨ RESERVATION FORM */
+/* ========================= */
+
+.customer-form-wrapper {
+  max-width: 950px;
+  margin: 70px auto;
+  padding: 45px;
+
+  background: white;
+
+  border-radius: 24px;
+
+  border: 1px solid #edf2f7;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.05);
+}
+
 .customer-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
-/* ROWS */
-.form-row {
-  display: flex;
-  gap: 20px;
+/* FORM TITLE */
+.customer-form h2 {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-/* GROUP */
-.form-group {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* LABEL */
-.form-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-/* INPUT */
-.form-group input {
-  padding: 12px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
-/* INPUT FOCUS */
-.form-group input:focus {
-  outline: none;
-  border-color: #1d4ed8;
-  box-shadow: 0 0 0 2px rgba(29,78,216,0.15);
-}
-
-/* FULL WIDTH */
-.full-width {
+/* INPUTS + TEXTAREA */
+.customer-form input,
+.customer-form textarea {
   width: 100%;
+
+  padding: 18px 20px;
+
+  font-size: 1rem;
+  font-family: inherit;
+  color: #0f172a;
+
+  background: #f8fafc;
+
+  border: 1px solid #dbe3ee;
+  border-radius: 16px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+
+  box-shadow:
+    inset 0 1px 2px rgba(0,0,0,0.02);
 }
 
-/* SUMMARY */
+/* TEXTAREA */
+.customer-form textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+/* PLACEHOLDER */
+.customer-form input::placeholder,
+.customer-form textarea::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* FOCUS */
+.customer-form input:focus,
+.customer-form textarea:focus {
+  outline: none;
+
+  border-color: #2563eb;
+
+  background: white;
+
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,0.10),
+    0 6px 20px rgba(37,99,235,0.08);
+
+  transform: translateY(-1px);
+}
+
+/* SUMMARY BOX */
 .order-summary {
   margin-top: 10px;
-  padding: 18px;
-  background: #ffffff;
-  border-radius: 12px;
+
+  padding: 24px;
+
+  background: #f8fafc;
+
+  border-radius: 18px;
+
   border: 1px solid #e2e8f0;
 }
 
@@ -247,11 +314,7 @@ p {
   margin-top: 10px;
 }
 
-/* ========================= */
-/* 💳 MODAL */
-/* ========================= */
-
-/* BACKDROP */
+/* MODAL */
 .modal {
   display: none;
   position: fixed;
@@ -286,17 +349,7 @@ p {
   cursor: pointer;
 }
 
-/* DEPOSIT SUMMARY */
-.deposit-summary {
-  margin: 20px 0;
-  font-size: 1.05rem;
-}
-
-.deposit-summary strong {
-  font-size: 1.2rem;
-}
-
-/* PAYPAL CONTAINER IN MODAL */
+/* PAYPAL CONTAINER */
 #paypal-modal-container {
   margin-top: 15px;
   width: 100%;
@@ -314,42 +367,22 @@ footer {
 
 /* MOBILE */
 @media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
+
+  .package-grid {
+    grid-template-columns: 1fr;
   }
-}
-/* ========================= */
-/* 🖼 PACKAGE IMAGES (NEW) */
-/* ========================= */
 
-/* IMAGE WRAPPER */
-.package-image {
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 15px;
-}
+  .build-grid {
+    grid-template-columns: 1fr;
+  }
 
-/* IMAGE ITSELF */
-.package-image img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.35s ease;
-}
+  .customer-form-wrapper {
+    padding: 28px 20px;
+  }
 
-/* HOVER EFFECT */
-.package-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+  .customer-form input,
+  .customer-form textarea {
+    padding: 16px;
+  }
 
-.package-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
-}
-
-/* IMAGE ZOOM */
-.package-card:hover .package-image img {
-  transform: scale(1.05);
 }
