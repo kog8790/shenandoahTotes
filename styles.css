@@ -126,26 +126,6 @@ p {
   border: 2px solid #1d4ed8;
 }
 
-/* PACKAGE IMAGES */
-.package-image {
-  width: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 15px;
-}
-
-.package-image img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.35s ease;
-}
-
-.package-card:hover .package-image img {
-  transform: scale(1.05);
-}
-
 /* PACKAGE LIST */
 .package-list {
   list-style: none;
@@ -183,13 +163,12 @@ p {
 
 .item-row select {
   width: 100%;
-  padding: 14px;
-  border-radius: 12px;
+  padding: 12px;
+  border-radius: 10px;
   border: 1px solid #cbd5e1;
-  font-size: 1rem;
 }
 
-/* BUILD CTA */
+/* BOOK CTA */
 .build-cta {
   margin-top: 30px;
 }
@@ -202,109 +181,88 @@ p {
   font-weight: 600;
 }
 
-/* SERVICE AREA */
+/* SERVICE AREA NOTE */
 .service-area-note {
-  margin-top: 10px;
-  font-size: 0.95rem;
+  margin-top: 14px;
+  font-size: 1rem;
   color: #475569;
+  font-weight: 500;
 }
 
-/* ========================= */
-/* ✨ RESERVATION FORM */
-/* ========================= */
-
+/* FORM WRAPPER */
 .customer-form-wrapper {
-  max-width: 950px;
-  margin: 70px auto;
-  padding: 45px;
-
+  margin-top: 70px;
   background: white;
-
-  border-radius: 24px;
-
-  border: 1px solid #edf2f7;
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.05);
+  padding: 50px;
+  border-radius: 22px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.08);
 }
 
+/* FORM */
 .customer-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
 }
 
-/* FORM TITLE */
+/* FORM HEADING */
 .customer-form h2 {
-  text-align: center;
+  font-size: 2rem;
   margin-bottom: 10px;
+  color: #0f172a;
 }
 
 /* INPUTS + TEXTAREA */
 .customer-form input,
 .customer-form textarea {
   width: 100%;
-
   padding: 18px 20px;
-
   font-size: 1rem;
-  font-family: inherit;
-  color: #0f172a;
-
-  background: #f8fafc;
-
+  border-radius: 14px;
   border: 1px solid #dbe3ee;
-  border-radius: 16px;
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-
-  box-shadow:
-    inset 0 1px 2px rgba(0,0,0,0.02);
+  background: #f8fafc;
+  transition: all 0.25s ease;
+  color: #0f172a;
 }
 
 /* TEXTAREA */
 .customer-form textarea {
-  min-height: 130px;
+  min-height: 140px;
   resize: vertical;
+}
+
+/* INPUT FOCUS */
+.customer-form input:focus,
+.customer-form textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
 }
 
 /* PLACEHOLDER */
 .customer-form input::placeholder,
 .customer-form textarea::placeholder {
   color: #94a3b8;
-  font-weight: 500;
 }
 
-/* FOCUS */
-.customer-form input:focus,
-.customer-form textarea:focus {
-  outline: none;
-
-  border-color: #2563eb;
-
-  background: white;
-
-  box-shadow:
-    0 0 0 4px rgba(37,99,235,0.10),
-    0 6px 20px rgba(37,99,235,0.08);
-
-  transform: translateY(-1px);
-}
-
-/* SUMMARY BOX */
+/* SUMMARY */
 .order-summary {
   margin-top: 10px;
-
   padding: 24px;
-
   background: #f8fafc;
-
-  border-radius: 18px;
-
+  border-radius: 16px;
   border: 1px solid #e2e8f0;
+}
+
+.order-summary h3 {
+  margin-bottom: 14px;
+}
+
+.order-summary p {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 /* TOTAL */
@@ -349,6 +307,16 @@ p {
   cursor: pointer;
 }
 
+/* DEPOSIT SUMMARY */
+.deposit-summary {
+  margin: 20px 0;
+  font-size: 1.05rem;
+}
+
+.deposit-summary strong {
+  font-size: 1.2rem;
+}
+
 /* PAYPAL CONTAINER */
 #paypal-modal-container {
   margin-top: 15px;
@@ -367,22 +335,62 @@ footer {
 
 /* MOBILE */
 @media (max-width: 768px) {
-
-  .package-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .build-grid {
-    grid-template-columns: 1fr;
+  .form-row {
+    flex-direction: column;
   }
 
   .customer-form-wrapper {
     padding: 28px 20px;
+    border-radius: 18px;
+  }
+
+  .customer-form h2 {
+    font-size: 1.7rem;
   }
 
   .customer-form input,
   .customer-form textarea {
     padding: 16px;
+    font-size: 1rem;
   }
+}
 
+/* ========================= */
+/* PACKAGE IMAGES */
+/* ========================= */
+
+.package-image {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  background: #fff;
+}
+
+.package-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+/* DESKTOP IMAGE SIZE */
+@media (min-width: 768px) {
+  .package-image img {
+    max-height: 260px;
+    object-fit: contain;
+  }
+}
+
+/* MOBILE IMAGE SIZE */
+@media (max-width: 767px) {
+  .package-image img {
+    max-height: none;
+    object-fit: contain;
+  }
+}
+
+/* IMAGE ZOOM */
+.package-card:hover .package-image img {
+  transform: scale(1.05);
 }
