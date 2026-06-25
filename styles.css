@@ -708,6 +708,13 @@ h1 span,
   transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 }
 
+.customer-form input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 3.5rem;
+  line-height: 1.2;
+}
+
 .customer-form textarea {
   grid-column: 1 / -1;
   min-height: 96px;
@@ -946,6 +953,11 @@ h1 span,
 
   .hero-actions .btn {
     width: 100%;
+  }
+  
+  .customer-form input[type="date"] {
+    width: 100%;
+    min-height: 4rem;
   }
 
   .hero-visual {
