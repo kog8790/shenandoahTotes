@@ -246,6 +246,45 @@ p {
   color: #94a3b8;
 }
 
+/* ADDRESS AUTOCOMPLETE */
+.address-field {
+  position: relative;
+}
+
+.address-suggestions {
+  display: none;
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dbe3ee;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  overflow: hidden;
+  text-align: left;
+}
+
+.address-suggestion {
+  width: 100%;
+  padding: 14px 16px;
+  background: white;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  cursor: pointer;
+  color: #0f172a;
+}
+
+.address-suggestion:last-child {
+  border-bottom: none;
+}
+
+.address-suggestion:hover {
+  background: #f8fafc;
+}
+
 /* SUMMARY */
 .order-summary {
   margin-top: 10px;

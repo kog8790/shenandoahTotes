@@ -150,10 +150,10 @@ Serving Winchester, Front Royal, and surrounding Shenandoah Valley areas.
 
 <h2>Order Summary</h2>
 
-<div id="summaryDetails"></div>
+<div id="liveSummaryDetails"></div>
 
 <p class="live-total">
-Total: $<span id="orderTotal">0</span>
+Total: $<span id="liveOrderTotal">0</span>
 </p>
 
 <button id="bookNowBtn" class="btn" type="button">
@@ -173,8 +173,16 @@ Book Now
 <input id="phone" placeholder="Phone" required>
 <input id="startDate" type="date" required>
 <input id="endDate" type="date" required>
-<input id="dropoffAddress" placeholder="Drop-Off Address" required>
-<input id="pickupAddress" placeholder="Pick-Up Address" required>
+<div class="address-field">
+    <input id="dropoffAddress" placeholder="Drop-Off Address" autocomplete="off" required>
+        <div id="dropoffSuggestions" class="address-suggestions"></div>
+</div>
+
+<div class="address-field">
+    <input id="pickupAddress" placeholder="Pick-Up Address" autocomplete="off" required>
+        <div id="pickupSuggestions" class="address-suggestions"></div>
+</div>
+
 <textarea id="notes" placeholder="Notes / special instructions"></textarea>
 
 <div class="order-summary">

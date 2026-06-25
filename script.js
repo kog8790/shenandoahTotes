@@ -35,6 +35,16 @@ async function checkServiceArea(data) {
   return await response.json();
 }
 
+async function addressAutocomplete(query) {
+  const response = await fetch("/.netlify/functions/address-autocomplete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query })
+  });
+
+  return await response.json();
+}
+
 async function createBooking(data) {
   const response = await fetch("/.netlify/functions/create-booking", {
     method: "POST",
@@ -75,6 +85,70 @@ async function updateReservation(id, fields) {
 
 // ===== MAIN =====
 document.addEventListener("DOMContentLoaded", () => {
+    
+    const selectedAddresses = {
+      dropoffAddress: null,
+      pickupAddress: null
+    };
+
+    function setupAddressAutocomplete(inputId, suggestionsId) {
+      const input = document.getElementById(inputId);
+      const suggestionsBox = document.getElementById(suggestionsId);
+      let debounceTimer;
+
+      input.addEventListener("input", () => {
+        selectedAddresses[inputId] = null;
+        clearTimeout(debounceTimer);
+
+        const query = input.value.trim();
+
+        if (query.length < 3) {
+          suggestionsBox.style.display = "none";
+          suggestionsBox.innerHTML = "";
+          return;
+        }
+
+        debounceTimer = setTimeout(async () => {
+          const result = await addressAutocomplete(query);
+          const suggestions = result.suggestions || [];
+
+          if (suggestions.length === 0) {
+            suggestionsBox.style.display = "none";
+            suggestionsBox.innerHTML = "";
+            return;
+          }
+
+          suggestionsBox.innerHTML = suggestions.map((suggestion, index) => `
+            <button class="address-suggestion" type="button" data-index="${index}">
+              ${suggestion.label}
+            </button>
+          `).join("");
+
+          suggestionsBox.querySelectorAll(".address-suggestion").forEach(button => {
+            button.addEventListener("click", () => {
+              const suggestion = suggestions[Number(button.dataset.index)];
+
+              selectedAddresses[inputId] = suggestion;
+              input.value = suggestion.label;
+
+              suggestionsBox.style.display = "none";
+              suggestionsBox.innerHTML = "";
+            });
+          });
+
+          suggestionsBox.style.display = "block";
+        }, 400);
+      });
+
+      input.addEventListener("blur", () => {
+        setTimeout(() => {
+          suggestionsBox.style.display = "none";
+        }, 200);
+      });
+    }
+
+    setupAddressAutocomplete("dropoffAddress", "dropoffSuggestions");
+    setupAddressAutocomplete("pickupAddress", "pickupSuggestions");
 
   // ===== TOTAL / SUMMARY =====
   function updateTotal() {
@@ -90,14 +164,18 @@ document.addEventListener("DOMContentLoaded", () => {
         (Number(document.getElementById("mattressBags").value) * 5);
     }
   
-    document.getElementById("orderTotal").textContent = total.toFixed(2);
-  
-    document.getElementById("summaryDetails").innerHTML = `
+    const summaryHtml = `
       Classic: ${document.getElementById("classicTotes").value}<br>
       Wheeled: ${document.getElementById("wheeledTotes").value}<br>
       Dollies: ${document.getElementById("dollies").value}<br>
       Mattress: ${document.getElementById("mattressBags").value}
     `;
+
+    document.getElementById("orderTotal").textContent = total.toFixed(2);
+    document.getElementById("summaryDetails").innerHTML = summaryHtml;
+
+    document.getElementById("liveOrderTotal").textContent = total.toFixed(2);
+    document.getElementById("liveSummaryDetails").innerHTML = summaryHtml;
   }
   
   // bind dropdown changes
@@ -144,14 +222,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
+
   // ===== BOOK NOW BUTTON =====
   document.getElementById("bookNowBtn").addEventListener("click", () => {
     document.getElementById("customerForm").scrollIntoView({ behavior: "smooth" });
   });
+
   // ===== MODAL CLOSE =====
   document.querySelector(".close").addEventListener("click", () => {
     document.getElementById("depositModal").style.display = "none";
   });
+
   // ===== MODAL BACKDROP CLICK CLOSE =====
   window.addEventListener("click", (e) => {
     const modal = document.getElementById("depositModal");
@@ -159,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.style.display = "none";
     }
   });
+
   // ===== Submit Logic =====
   document.getElementById("submitReservationBtn").addEventListener("click", async () => {
 
@@ -167,9 +249,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!form.reportValidity()) {
       return;
     }
+      
+    if (!selectedAddresses.dropoffAddress) {
+      alert("Please choose a valid drop-off address from the suggestions.");
+      document.getElementById("dropoffAddress").focus();
+      return;
+    }
+
+    if (!selectedAddresses.pickupAddress) {
+      alert("Please choose a valid pick-up address from the suggestions.");
+      document.getElementById("pickupAddress").focus();
+      return;
+    }
 
     // ===== CUSTOMER INFO =====
-    const name = document.getElementById("fullName").value;    const email = document.getElementById("email").value;
+    const name = document.getElementById("fullName").value;
+    const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
     const start = document.getElementById("startDate").value;
     const end = document.getElementById("endDate").value;
@@ -217,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // ===== CHECK AVAILABILITY =====
+    // ===== CHECK AVAILABILITY BEFORE PAYMENT =====
     const availability = await checkAvailability({
       startDate: start,
       endDate: end,
@@ -233,72 +328,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // ===== CREATE RESERVATION =====
-    const reservation = await createReservation({
-      "Customer Name": name,
-      "Email": email,
-      "Phone": phone,
-      "Drop Off Address": DOA,
-      "Pick Up Address": POA,
-      "Notes": notes,
-      "Invoice Paid": false
-    });
-
-    console.log("reservation response:", reservation);
-
-    const reservationId = reservation.id;
-
-    if (!reservationId) {
-      alert("Reservation failed. Check console.");
-      console.error("Invalid reservation response:", reservation);
-      return;
-    }
-
-    // ===== CREATE BOOKINGS =====
-    let successCount = 0;
-
-    for (let item of items) {
-      if (item.qty > 0) {
-        try {
-          const booking = await createBooking({
-            "Tote Type": [toteMap[item.name]],
-            "Number Reserved": item.qty,
-            "Start Date Time": start,
-            "End Date Time": end,
-            "Reservation ID": [reservationId]
-          });
-
-          console.log("booking response:", item.name, booking);
-          successCount++;
-
-        } catch (err) {
-          console.error("booking failed:", item.name, err);
-        }
-      }
-    }
-
-    if (successCount === 0) {
-      alert("Something went wrong. No bookings were created.");
-      return;
-    }
-
-    // ===== DELIVERY FEE LOGIC =====
-    let reservationData = await getReservation(reservationId);
-    let total = Number(reservationData.fields["Total Invoice"] || 0);
-
-    if (total < 29) {
-      await updateReservation(reservationId, {
-        "Delivery Fee": 25
-      });
-
-      // Re-fetch after delivery fee update so PayPal charges final total
-      reservationData = await getReservation(reservationId);
-      total = Number(reservationData.fields["Total Invoice"] || 0);
-    }
+    // ===== PAYMENT TOTAL =====
+    let total = Number(document.getElementById("orderTotal").textContent || 0);
+    const deliveryFee = total < 29 ? 25 : 0;
+    total += deliveryFee;
 
     if (!total || total <= 0) {
       alert("Could not calculate order total. Please contact support.");
-      console.error("Invalid total:", reservationData);
       return;
     }
 
@@ -325,9 +361,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
         console.log("PayPal payment successful:", details);
 
-        await updateReservation(reservationId, {
-          "Invoice Paid": true
+        // Re-check availability after payment, before creating Airtable records
+        const finalAvailability = await checkAvailability({
+          startDate: start,
+          endDate: end,
+          items
         });
+
+        if (!finalAvailability.available) {
+          alert("Payment was successful, but availability changed before the reservation could be created. Please contact support.");
+          return;
+        }
+
+        // ===== CREATE RESERVATION AFTER PAYMENT =====
+        const reservation = await createReservation({
+          "Customer Name": name,
+          "Email": email,
+          "Phone": phone,
+          "Drop Off Address": DOA,
+          "Pick Up Address": POA,
+          "Notes": notes,
+          "Invoice Paid": true,
+          "Delivery Fee": deliveryFee
+        });
+
+        console.log("reservation response:", reservation);
+
+        const reservationId = reservation.id;
+
+        if (!reservationId) {
+          alert("Payment was successful, but reservation creation failed. Please contact support.");
+          console.error("Invalid reservation response:", reservation);
+          return;
+        }
+
+        // ===== CREATE BOOKINGS AFTER PAYMENT =====
+        let successCount = 0;
+
+        for (let item of items) {
+          if (item.qty > 0) {
+            try {
+              const booking = await createBooking({
+                "Tote Type": [toteMap[item.name]],
+                "Number Reserved": item.qty,
+                "Start Date Time": start,
+                "End Date Time": end,
+                "Reservation ID": [reservationId]
+              });
+
+              console.log("booking response:", item.name, booking);
+              successCount++;
+
+            } catch (err) {
+              console.error("booking failed:", item.name, err);
+            }
+          }
+        }
+
+        if (successCount === 0) {
+          alert("Payment was successful, but no bookings were created. Please contact support.");
+          return;
+        }
 
         alert("Payment successful! Reservation confirmed.");
       },
