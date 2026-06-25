@@ -152,9 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Submit Logic =====
   document.getElementById("submitReservationBtn").addEventListener("click", async () => {
 
+    const form = document.getElementById("bookingForm");
+
+    if (!form.reportValidity()) {
+      return;
+    }
+
     // ===== CUSTOMER INFO =====
-    const name = document.getElementById("fullName").value;
-    const email = document.getElementById("email").value;
+    const name = document.getElementById("fullName").value;    const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
     const start = document.getElementById("startDate").value;
     const end = document.getElementById("endDate").value;
