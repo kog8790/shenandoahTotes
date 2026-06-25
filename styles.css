@@ -713,6 +713,16 @@ h1 span,
   -webkit-appearance: none;
   min-height: 3.5rem;
   line-height: 1.2;
+  color: var(--navy);
+}
+
+.customer-form input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+  color: var(--navy);
+}
+
+.customer-form input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.7;
 }
 
 .customer-form textarea {
@@ -734,8 +744,10 @@ h1 span,
   color: #93a1b4;
 }
 
-.address-field {
+.address-field,
+.date-field {
   position: relative;
+  min-width: 0;
 }
 
 .address-suggestions {
@@ -954,10 +966,12 @@ h1 span,
   .hero-actions .btn {
     width: 100%;
   }
-  
+
   .customer-form input[type="date"] {
     width: 100%;
     min-height: 4rem;
+    padding: 15px 16px;
+    font-size: 1rem;
   }
 
   .hero-visual {
