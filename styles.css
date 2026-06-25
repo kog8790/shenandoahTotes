@@ -560,6 +560,14 @@ h1 span,
   font-weight: 850;
 }
 
+.date-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--navy);
+  font-weight: 850;
+  text-align: left;
+}
+
 .item-row select {
   width: 100%;
   padding: 12px;
