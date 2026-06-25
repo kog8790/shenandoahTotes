@@ -86,6 +86,24 @@ async function updateReservation(id, fields) {
 // ===== MAIN =====
 document.addEventListener("DOMContentLoaded", () => {
     
+    if (typeof flatpickr === "function") {
+      flatpickr("#startDate", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        disableMobile: true
+      });
+
+      flatpickr("#endDate", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        disableMobile: true
+      });
+    }
+    
     const selectedAddresses = {
       dropoffAddress: null,
       pickupAddress: null
