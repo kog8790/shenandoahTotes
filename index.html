@@ -3,221 +3,322 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Shenandoah Tote Rental</title>
+<title>Shenandoah Valley Tote Rentals</title>
 <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <img src="logo.png" class="logo" alt="Logo">
-</div>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="Shenandoah Valley Tote Rentals home">
+      <img src="assets/logo.png" class="brand-logo" alt="Shenandoah Valley Tote Rentals logo">
+    </a>
 
-<hr>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="#howItWorks">How It Works</a>
+      <a href="#packages">Packages</a>
+      <a href="#customerForm">Reserve</a>
+    </nav>
 
-<div class="container">
+    <a class="btn header-cta" href="#packages">Book Now</a>
+  </div>
+</header>
 
-<h1>Shenandoah Tote Rental</h1>
-<p>A cleaner, easier way to move in the Shenandoah Valley.</p>
+<main id="top">
 
-<!-- PACKAGES -->
-<div class="section">
-<h2>Choose Your Move Size</h2>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-copy">
+      <p class="eyebrow">Tote rental made easy</p>
+      <h1>A cleaner, easier way to move in the Shenandoah Valley.</h1>
+      <p class="hero-lede">
+        We drop off the totes. You pack and move. We pick everything up when you're done.
+      </p>
 
-<div class="package-grid">
+      <div class="hero-benefits" aria-label="Benefits">
+        <div class="benefit-pill">✓ Budget-friendly</div>
+        <div class="benefit-pill">✓ No storage hassle</div>
+        <div class="benefit-pill">✓ Flexible timing</div>
+      </div>
 
-<!-- LIGHT -->
-<div class="package-card">
-  <div class="package-image">
-    <img src="tote-package-light.jpg" alt="Light Move">
+      <div class="hero-actions">
+        <a class="btn" href="#packages">Choose Your Move Size</a>
+        <a class="secondary-link" href="#howItWorks">See how it works</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="totey-card">
+          <img src="assets/totey-mascot.png" class="totey-placeholder" alt="Totey, the Shenandoah Totes mascot">
+        <div class="totey-bubble">
+          <strong>Hi, I'm Totey!</strong>
+          <span>I'm here to make moving easier.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how-it-works section-panel" id="howItWorks">
+  <div class="section-heading">
+    <p class="eyebrow">Simple from start to finish</p>
+    <h2>How It Works</h2>
   </div>
 
-  <h3>Light Move</h3>
+  <div class="steps-illustration">
 
-  <ul class="package-list">
-    <li>10 Classic Totes</li>
-    <li>1 Mattress Bag</li>
-  </ul>
+    <img
+      src="assets/how-it-works-triptych.png"
+      alt="How Shenandoah Valley Tote Rentals works"
+      class="steps-hero-image">
 
-  <button id="lightMoveBtn" class="btn" type="button">Choose</button>
-  <p>$29.99</p>
-</div>
+  </div>
+  
+  <div class="promise-strip">
+    <strong>Simple, affordable, and stress-free moving.</strong>
+    <span>More time for what matters. Less money spent. Zero clutter left behind.</span>
+  </div>
+</section>
 
-<!-- FAMILY -->
-<div class="package-card featured">
-  <div class="package-image">
-    <img src="tote-package-family.jpg" alt="Family Move">
+<div class="booking-layout" id="packages">
+
+  <div class="booking-main">
+
+    <section class="section-panel packages-section">
+      <div class="section-heading">
+        <p class="eyebrow">Pick a starting point</p>
+        <h2>Choose Your Move Size</h2>
+      </div>
+
+      <div class="package-grid">
+
+        <article class="package-card">
+          <div class="package-image">
+              <img src="assets/tote-package-light.jpg" alt="Light Move package">
+          </div>
+
+          <h3>Light Move</h3>
+
+          <ul class="package-list">
+            <li>10 Classic Totes</li>
+            <li>1 Mattress Bag</li>
+          </ul>
+
+          <p class="package-price">$29.99</p>
+          <button id="lightMoveBtn" class="btn package-btn" type="button">Select</button>
+        </article>
+
+        <article class="package-card featured">
+          <div class="popular-badge">Most Popular</div>
+
+          <div class="package-image">
+              <img src="assets/tote-package-family.jpg" alt="Family Move package">
+          </div>
+
+          <h3>Family Move</h3>
+
+          <ul class="package-list">
+            <li>20 Classic Totes</li>
+            <li>1 Wheeled Tote</li>
+            <li>2 Mattress Bags</li>
+            <li>1 Dolly</li>
+          </ul>
+
+          <p class="package-price">$74.99</p>
+          <button id="familyMoveBtn" class="btn package-btn" type="button">Select</button>
+        </article>
+
+        <article class="package-card">
+          <div class="package-image">
+              <img src="assets/tote-package-full.jpg" alt="Full House Move package">
+          </div>
+
+          <h3>Full House Move</h3>
+
+          <ul class="package-list">
+            <li>30 Classic Totes</li>
+            <li>2 Wheeled Totes</li>
+            <li>4 Mattress Bags</li>
+            <li>1 Dolly</li>
+          </ul>
+
+          <p class="package-price">$119.99</p>
+          <button id="fullMoveBtn" class="btn package-btn" type="button">Select</button>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section-panel build-section">
+      <div class="section-heading compact-heading">
+        <p class="eyebrow">Need something different?</p>
+        <h2>Build Your Own</h2>
+        <p>Choose exactly what you need.</p>
+      </div>
+
+      <div class="build-grid">
+
+        <div class="item-row">
+          <label for="classicTotes">Classic Tote</label>
+          <select id="classicTotes">
+            <option value="0">0</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
+
+        <div class="item-row">
+          <label for="wheeledTotes">Wheeled Tote</label>
+          <select id="wheeledTotes">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+
+        <div class="item-row">
+          <label for="dollies">Dolly</label>
+          <select id="dollies">
+            <option value="0">0</option>
+            <option value="1">1</option>
+          </select>
+        </div>
+
+        <div class="item-row">
+          <label for="mattressBags">Mattress Bag</label>
+          <select id="mattressBags">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="deposit-note">
+        🔒 Payment is due at booking to confirm your reservation.
+      </div>
+    </section>
+
+    <section class="customer-form-wrapper" id="customerForm">
+      <form id="bookingForm" class="customer-form">
+
+        <div class="section-heading form-heading">
+          <p class="eyebrow">Almost done</p>
+          <h2>Reservation Details</h2>
+          <p>Tell us where and when to deliver.</p>
+        </div>
+
+        <div class="form-grid">
+          <input id="fullName" placeholder="Full Name" required>
+          <input id="email" type="email" placeholder="Email" required>
+          <input id="phone" placeholder="Phone" required>
+          <input id="startDate" type="date" required>
+          <input id="endDate" type="date" required>
+
+          <div class="address-field">
+            <input id="dropoffAddress" placeholder="Drop-Off Address" autocomplete="off" required>
+            <div id="dropoffSuggestions" class="address-suggestions"></div>
+          </div>
+
+          <div class="address-field">
+            <input id="pickupAddress" placeholder="Pick-Up Address" autocomplete="off" required>
+            <div id="pickupSuggestions" class="address-suggestions"></div>
+          </div>
+
+          <textarea id="notes" placeholder="Notes / special instructions"></textarea>
+        </div>
+
+        <div class="order-summary">
+          <h3>Your Reservation Summary</h3>
+          <div id="summaryDetails"></div>
+          <p>Total: $<span id="orderTotal">0</span></p>
+
+          <button id="submitReservationBtn" class="btn" type="button">
+            Review & Pay
+          </button>
+        </div>
+
+      </form>
+    </section>
+
   </div>
 
-  <h3>Family Move</h3>
+  <aside class="booking-sidebar">
+    <div class="live-summary-card">
+      <div class="summary-header">
+        <h2>Order Summary</h2>
+        <span>Live total</span>
+      </div>
 
-  <ul class="package-list">
-    <li>20 Classic Totes</li>
-    <li>1 Wheeled Tote</li>
-    <li>2 Mattress Bags</li>
-    <li>1 Dolly</li>
-  </ul>
+      <div id="liveSummaryDetails"></div>
 
-  <button id="familyMoveBtn" class="btn" type="button">Choose</button>
-  <p>$74.99</p>
+      <p class="live-total">
+        Total: $<span id="liveOrderTotal">0</span>
+      </p>
+
+      <button id="bookNowBtn" class="btn" type="button">
+        Continue
+      </button>
+
+      <p class="summary-footnote">You'll review and pay after entering your details.</p>
+    </div>
+
+    <div class="trust-card">
+      <div>
+        <strong>Save money</strong>
+        <span>Affordable rentals so you can move for less.</span>
+      </div>
+
+      <div>
+        <strong>No storage hassle</strong>
+        <span>No need to buy bulky equipment you may not use again.</span>
+      </div>
+
+      <div>
+        <strong>Local & friendly</strong>
+        <span>Proudly serving Winchester, Front Royal, and nearby areas.</span>
+      </div>
+    </div>
+  </aside>
+
 </div>
 
-<!-- FULL -->
-<div class="package-card">
-  <div class="package-image">
-    <img src="tote-package-full.jpg" alt="Full Move">
+<section class="totey-promise">
+  <div class="promise-mascot">
+      <img src="assets/totey-mascot.png" alt="Totey mascot">
   </div>
 
-  <h3>Full House Move</h3>
+  <div>
+    <h2>Totey's Promise</h2>
+    <p>We're here to make your move easier, cleaner, and less expensive. That's a promise.</p>
+  </div>
 
-  <ul class="package-list">
-    <li>30 Classic Totes</li>
-    <li>2 Wheeled Totes</li>
-    <li>4 Mattress Bags</li>
-    <li>1 Dolly</li>
-  </ul>
+  <p class="service-area-note">
+    Serving Winchester, Front Royal, and surrounding Shenandoah Valley areas.
+  </p>
+</section>
 
-  <button id="fullMoveBtn" class="btn" type="button">Choose</button>
-  <p>$119.99</p>
-</div>
+</main>
 
-</div>
-</div>
-
-<!-- BUILD -->
-<div class="section">
-<h2>Build Your Own</h2>
-
-<div class="build-grid">
-
-<div class="item-row">
-<label>Classic Tote</label>
-<select id="classicTotes">
-<option value="0">0</option>
-<option value="10">10</option>
-<option value="20">20</option>
-<option value="30">30</option>
-</select>
-</div>
-
-<div class="item-row">
-<label>Wheeled Tote</label>
-<select id="wheeledTotes">
-<option value="0">0</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="4">4</option>
-</select>
-</div>
-
-<div class="item-row">
-<label>Dolly</label>
-<select id="dollies">
-<option value="0">0</option>
-<option value="1">1</option>
-</select>
-</div>
-
-<div class="item-row">
-<label>Mattress Bag</label>
-<select id="mattressBags">
-<option value="0">0</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="4">4</option>
-</select>
-</div>
-
-</div>
-
-<div class="build-cta">
-<button id="bookNowBtn" class="btn" type="button">Book Now</button>
-
-<div class="deposit-note">
-🔒 Payment due at booking to confirm reservation
-</div>
-
-<p class="service-area-note">
-Serving Winchester, Front Royal, and surrounding Shenandoah Valley areas.
-</p>
-</div>
-
-</div>
-
-<!-- LIVE ORDER SUMMARY -->
-<div class="customer-form-wrapper">
-
-<h2>Order Summary</h2>
-
-<div id="liveSummaryDetails"></div>
-
-<p class="live-total">
-Total: $<span id="liveOrderTotal">0</span>
-</p>
-
-<button id="bookNowBtn" class="btn" type="button">
-Book Now
-</button>
-
-</div>
-
-<!-- FORM -->
-<div class="customer-form-wrapper" id="customerForm">
-<form id="bookingForm" class="customer-form">
-
-<h2>Reservation Details</h2>
-
-<input id="fullName" placeholder="Full Name" required>
-<input id="email" type="email" placeholder="Email" required>
-<input id="phone" placeholder="Phone" required>
-<input id="startDate" type="date" required>
-<input id="endDate" type="date" required>
-<div class="address-field">
-    <input id="dropoffAddress" placeholder="Drop-Off Address" autocomplete="off" required>
-        <div id="dropoffSuggestions" class="address-suggestions"></div>
-</div>
-
-<div class="address-field">
-    <input id="pickupAddress" placeholder="Pick-Up Address" autocomplete="off" required>
-        <div id="pickupSuggestions" class="address-suggestions"></div>
-</div>
-
-<textarea id="notes" placeholder="Notes / special instructions"></textarea>
-
-<div class="order-summary">
-<h3>Your Reservation Summary</h3>
-<div id="summaryDetails"></div>
-<p>Total: $<span id="orderTotal">0</span></p>
-
-<button id="submitReservationBtn" class="btn" type="button">
-  Submit Reservation
-</button>
-</div>
-
-</form>
-</div>
-
-</div>
-
-<!-- MODAL -->
 <div id="depositModal" class="modal">
-<div class="modal-content">
-<span class="close">&times;</span>
+  <div class="modal-content">
+    <span class="close">&times;</span>
 
-<h2>Secure Your Booking</h2>
-<p>Complete payment to confirm your reservation</p>
+    <h2>Secure Your Booking</h2>
+    <p>Complete payment to confirm your reservation</p>
 
-<p><strong>Total Due: $<span id="modalTotal">0</span></strong></p>
+    <p><strong>Total Due: $<span id="modalTotal">0</span></strong></p>
 
-<div id="paypal-modal-container"></div>
+    <div id="paypal-modal-container"></div>
+  </div>
 </div>
-</div>
 
-<!-- PAYPAL SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=AfKgo-xVuvFlIspJ2OLCnMEmafBBC196-H0WRof1J0phiFeNSNbaCINA5JQpRw18GNAR_vXTVEMVwAoz&currency=USD"></script>
-
-<!-- SITE LOGIC -->
 <script src="script.js"></script>
 
 </body>
