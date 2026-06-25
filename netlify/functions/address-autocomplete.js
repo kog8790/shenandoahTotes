@@ -44,10 +44,41 @@ async function searchAddresses(query) {
   }
 
   return data.map(place => ({
-    label: place.display_name,
+    label: formatAddress(place),
     lat: Number(place.lat),
     lon: Number(place.lon)
   }));
+}
+
+function formatAddress(place) {
+  const address = place.address || {};
+
+  const street = [
+    address.house_number,
+    address.road
+  ].filter(Boolean).join(" ");
+
+  const city =
+    address.city ||
+    address.town ||
+    address.village ||
+    address.hamlet ||
+    address.municipality ||
+    "";
+
+  const state = address.state || "";
+  const postcode = address.postcode || "";
+
+  const cityLine = [
+    city,
+    state,
+    postcode
+  ].filter(Boolean).join(", ");
+
+  return [
+    street,
+    cityLine
+  ].filter(Boolean).join(", ");
 }
 
 function response(statusCode, body) {
