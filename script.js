@@ -25,6 +25,16 @@ async function checkAvailability(data) {
   return await response.json();
 }
 
+async function checkServiceArea(data) {
+  const response = await fetch("/.netlify/functions/check-service-area", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  return await response.json();
+}
+
 async function createBooking(data) {
   const response = await fetch("/.netlify/functions/create-booking", {
     method: "POST",
@@ -175,13 +185,45 @@ document.addEventListener("DOMContentLoaded", () => {
       { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) },
     ];
 
+    // ===== CHECK SERVICE AREA =====
+    const serviceArea = await checkServiceArea({
+      dropoffAddress: DOA,
+      pickupAddress: POA
+    });
+
+    let disclaimer = "";
+
+    if (!serviceArea.dropoff.withinServiceArea) {
+      disclaimer +=
+        `• Drop-off address is ${serviceArea.dropoff.distanceMiles} miles away.\n` +
+        `  Customer pickup will be required.\n\n`;
+    }
+
+    if (!serviceArea.pickup.withinServiceArea) {
+      disclaimer +=
+        `• Pick-up address is ${serviceArea.pickup.distanceMiles} miles away.\n` +
+        `  Customer return will be required.\n\n`;
+    }
+
+    if (disclaimer.length > 0) {
+      const proceed = confirm(
+        "Outside Service Area\n\n" +
+        disclaimer +
+        "Would you like to continue with your reservation?"
+      );
+
+      if (!proceed) {
+        return;
+      }
+    }
+
     // ===== CHECK AVAILABILITY =====
     const availability = await checkAvailability({
       startDate: start,
       endDate: end,
       items
     });
-
+      
     if (!availability.available) {
       const message = availability.conflicts
         .map(c => `${c.item}: requested ${c.requested}, available ${c.available}`)
