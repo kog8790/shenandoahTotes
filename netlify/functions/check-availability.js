@@ -1,3 +1,5 @@
+import { fetchAllRecords } from "./lib/airtable.js";
+
 export async function handler(event) {
   const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
   const BASE_ID = process.env.AIRTABLE_BASE_ID;
@@ -109,40 +111,12 @@ export async function handler(event) {
   }
 }
 
-async function fetchAllRecords(baseId, tableName, token) {
-  let records = [];
-  let offset;
-
-  do {
-    const url = new URL(`https://api.airtable.com/v0/${baseId}/${tableName}`);
-
-    if (offset) {
-      url.searchParams.append("offset", offset);
-    }
-
-    const res = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(JSON.stringify(data));
-    }
-
-    records = records.concat(data.records || []);
-    offset = data.offset;
-
-  } while (offset);
-
-  return records;
-}
-
 function response(statusCode, body) {
   return {
     statusCode,
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(body)
   };
 }
