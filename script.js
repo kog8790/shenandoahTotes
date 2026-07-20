@@ -159,6 +159,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       populateQuantitySelect("dollies", 1);
       populateQuantitySelect("mattressBags", 4);
     }
+
+    updateTotal();
     
     const selectedAddresses = {
       dropoffAddress: null,
