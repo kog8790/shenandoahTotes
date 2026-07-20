@@ -83,8 +83,29 @@ async function updateReservation(id, fields) {
   return await res.json();
 }
 
+async function getInventory() {
+  const response = await fetch("/.netlify/functions/get-inventory");
+
+  return await response.json();
+}
+
+function populateQuantitySelect(selectId, maximum) {
+  const select = document.getElementById(selectId);
+
+  select.innerHTML = "";
+
+  for (let i = 0; i <= maximum; i++) {
+    const option = document.createElement("option");
+
+    option.value = i;
+    option.textContent = i;
+
+    select.appendChild(option);
+  }
+}
+
 // ===== MAIN =====
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     
     if (typeof flatpickr === "function") {
       flatpickr("#startDate", {
@@ -102,6 +123,41 @@ document.addEventListener("DOMContentLoaded", () => {
         minDate: "today",
         disableMobile: true
       });
+    }
+
+    try {
+      const inventory = await getInventory();
+
+      if (!inventory.success) {
+        throw new Error(inventory.error || "Inventory request failed");
+      }
+
+      populateQuantitySelect(
+        "classicTotes",
+        inventory.inventory["Classic Tote"] ?? 0
+      );
+
+      populateQuantitySelect(
+        "wheeledTotes",
+        inventory.inventory["Wheeled Tote"] ?? 0
+      );
+
+      populateQuantitySelect(
+        "dollies",
+        inventory.inventory["Dolly"] ?? 0
+      );
+
+      populateQuantitySelect(
+        "mattressBags",
+        inventory.inventory["Mattress Bag"] ?? 0
+      );
+    } catch (error) {
+      console.error("Could not load inventory:", error);
+
+      populateQuantitySelect("classicTotes", 30);
+      populateQuantitySelect("wheeledTotes", 4);
+      populateQuantitySelect("dollies", 1);
+      populateQuantitySelect("mattressBags", 4);
     }
     
     const selectedAddresses = {
