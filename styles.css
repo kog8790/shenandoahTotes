@@ -914,6 +914,7 @@ h1 span,
   }
 
   .booking-sidebar {
+    display: none;
     position: static;
   }
 
