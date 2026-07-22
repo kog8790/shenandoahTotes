@@ -915,7 +915,6 @@ h1 span,
 
   .booking-sidebar {
     position: static;
-    order: -1;
   }
 
   .steps-grid,
