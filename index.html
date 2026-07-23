@@ -385,6 +385,18 @@
           <div id="summaryDetails"></div>
           <p>Total: $<span id="orderTotal">0</span></p>
 
+          <div class="discount-code-field">
+            <label for="discountCode">Discount Code</label>
+            <input
+              id="discountCode"
+              type="text"
+              placeholder="Enter code"
+              autocomplete="off"
+              spellcheck="false"
+            >
+            <p id="discountMessage" aria-live="polite"></p>
+          </div>
+
           <button id="submitReservationBtn" class="btn" type="button">
             Review & Pay
           </button>
