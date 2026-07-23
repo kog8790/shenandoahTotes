@@ -317,15 +317,143 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // ===== Submit Logic =====
-  document.getElementById("submitReservationBtn").addEventListener("click", async () => {
+  // ===== PAYPAL CHECKOUT STATE =====
+let pendingCheckout = null;
 
+const paypalContainer = document.getElementById("paypal-modal-container");
+
+paypal.Buttons({
+  createOrder(data, actions) {
+    if (!pendingCheckout || !pendingCheckout.total) {
+      throw new Error("Checkout data is not ready.");
+    }
+
+    return actions.order.create({
+      purchase_units: [
+        {
+          amount: {
+            value: pendingCheckout.total.toFixed(2)
+          }
+        }
+      ]
+    });
+  },
+
+  async onApprove(data, actions) {
+    if (!pendingCheckout) {
+      alert("Checkout information is missing. Please restart your reservation.");
+      return;
+    }
+
+    const details = await actions.order.capture();
+
+    console.log("PayPal payment successful:", details);
+
+    const {
+      name,
+      email,
+      phone,
+      start,
+      end,
+      pickupAddress,
+      dropoffAddress,
+      notes,
+      items,
+      deliveryFee
+    } = pendingCheckout;
+
+    // Re-check availability after payment, before creating Airtable records
+    const finalAvailability = await checkAvailability({
+      startDate: start,
+      endDate: end,
+      items
+    });
+
+    if (!finalAvailability.available) {
+      alert(
+        "Payment was successful, but availability changed before the reservation could be created. Please contact support."
+      );
+      return;
+    }
+
+    // ===== CREATE RESERVATION AFTER PAYMENT =====
+    const reservation = await createReservation({
+      "Customer Name": name,
+      "Email": email,
+      "Phone": phone,
+      "Drop Off Address": dropoffAddress,
+      "Pick Up Address": pickupAddress,
+      "Notes": notes,
+      "Invoice Paid": true,
+      "Delivery Fee": deliveryFee
+    });
+
+    console.log("reservation response:", reservation);
+
+    const reservationId = reservation.id;
+
+    if (!reservationId) {
+      alert(
+        "Payment was successful, but reservation creation failed. Please contact support."
+      );
+      console.error("Invalid reservation response:", reservation);
+      return;
+    }
+
+    // ===== CREATE BOOKINGS AFTER PAYMENT =====
+    let successCount = 0;
+
+    for (const item of items) {
+      if (item.qty <= 0) {
+        continue;
+      }
+
+      try {
+        const booking = await createBooking({
+          "Tote Type": [toteMap[item.name]],
+          "Number Reserved": item.qty,
+          "Start Date Time": start,
+          "End Date Time": end,
+          "Reservation ID": [reservationId]
+        });
+
+        console.log("booking response:", item.name, booking);
+        successCount++;
+      } catch (error) {
+        console.error("booking failed:", item.name, error);
+      }
+    }
+
+    if (successCount === 0) {
+      alert(
+        "Payment was successful, but no bookings were created. Please contact support."
+      );
+      return;
+    }
+
+    pendingCheckout = null;
+    document.getElementById("depositModal").style.display = "none";
+
+    alert("Payment successful! Reservation confirmed.");
+  },
+
+  onError(error) {
+    console.error("PayPal error:", error);
+    alert("Payment failed. Please try again or contact support.");
+  }
+}).render(paypalContainer);
+
+// ===== SUBMIT LOGIC =====
+document
+  .getElementById("submitReservationBtn")
+  .addEventListener("click", async () => {
     const form = document.getElementById("bookingForm");
+    const submitButton = document.getElementById("submitReservationBtn");
 
     if (!form.reportValidity()) {
       return;
     }
-      
+
     if (!selectedAddresses.dropoffAddress) {
       alert("Please choose a valid drop-off address from the suggestions.");
       document.getElementById("dropoffAddress").focus();
@@ -338,176 +466,126 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // ===== CUSTOMER INFO =====
-    const name = document.getElementById("fullName").value;
-    const email = document.getElementById("email").value;
-    const phone = document.getElementById("phone").value;
-    const start = document.getElementById("startDate").value;
-    const end = document.getElementById("endDate").value;
-    const POA = document.getElementById("pickupAddress").value;
-    const DOA = document.getElementById("dropoffAddress").value;
-    const notes = document.getElementById("notes").value;
+    submitButton.disabled = true;
+    submitButton.textContent = "Preparing checkout…";
 
-    // ===== ITEMS =====
-    const items = [
-      { name: "Classic Tote", qty: Number(document.getElementById("classicTotes").value) },
-      { name: "Wheeled Tote", qty: Number(document.getElementById("wheeledTotes").value) },
-      { name: "Dolly", qty: Number(document.getElementById("dollies").value) },
-      { name: "Mattress Bag", qty: Number(document.getElementById("mattressBags").value) },
-    ];
+    try {
+      // ===== CUSTOMER INFO =====
+      const name = document.getElementById("fullName").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const start = document.getElementById("startDate").value;
+      const end = document.getElementById("endDate").value;
+      const pickupAddress = document.getElementById("pickupAddress").value;
+      const dropoffAddress = document.getElementById("dropoffAddress").value;
+      const notes = document.getElementById("notes").value;
 
-    // ===== CHECK SERVICE AREA =====
-    const serviceArea = await checkServiceArea({
-      dropoffAddress: DOA,
-      pickupAddress: POA
-    });
+      // ===== ITEMS =====
+      const items = [
+        {
+          name: "Classic Tote",
+          qty: Number(document.getElementById("classicTotes").value)
+        },
+        {
+          name: "Wheeled Tote",
+          qty: Number(document.getElementById("wheeledTotes").value)
+        },
+        {
+          name: "Dolly",
+          qty: Number(document.getElementById("dollies").value)
+        },
+        {
+          name: "Mattress Bag",
+          qty: Number(document.getElementById("mattressBags").value)
+        }
+      ];
 
-    let disclaimer = "";
+      // ===== CHECK SERVICE AREA =====
+      const serviceArea = await checkServiceArea({
+        dropoffAddress,
+        pickupAddress
+      });
 
-    if (!serviceArea.dropoff.withinServiceArea) {
-      disclaimer +=
-        `• Drop-off address is ${serviceArea.dropoff.distanceMiles} miles away.\n` +
-        `  Customer pickup will be required.\n\n`;
-    }
+      let disclaimer = "";
 
-    if (!serviceArea.pickup.withinServiceArea) {
-      disclaimer +=
-        `• Pick-up address is ${serviceArea.pickup.distanceMiles} miles away.\n` +
-        `  Customer return will be required.\n\n`;
-    }
+      if (!serviceArea.dropoff.withinServiceArea) {
+        disclaimer +=
+          `• Drop-off address is ${serviceArea.dropoff.distanceMiles} miles away.\n` +
+          `  Customer pickup will be required.\n\n`;
+      }
 
-    if (disclaimer.length > 0) {
-      const proceed = confirm(
-        "Outside Service Area\n\n" +
-        disclaimer +
-        "Would you like to continue with your reservation?"
-      );
+      if (!serviceArea.pickup.withinServiceArea) {
+        disclaimer +=
+          `• Pick-up address is ${serviceArea.pickup.distanceMiles} miles away.\n` +
+          `  Customer return will be required.\n\n`;
+      }
 
-      if (!proceed) {
+      if (disclaimer.length > 0) {
+        const proceed = confirm(
+          "Outside Service Area\n\n" +
+          disclaimer +
+          "Would you like to continue with your reservation?"
+        );
+
+        if (!proceed) {
+          return;
+        }
+      }
+
+      // ===== CHECK AVAILABILITY BEFORE PAYMENT =====
+      const availability = await checkAvailability({
+        startDate: start,
+        endDate: end,
+        items
+      });
+
+      if (!availability.available) {
+        const message = availability.conflicts
+          .map(
+            conflict =>
+              `${conflict.item}: requested ${conflict.requested}, available ${conflict.available}`
+          )
+          .join("\n");
+
+        alert("Some items are not available:\n\n" + message);
         return;
       }
-    }
 
-    // ===== CHECK AVAILABILITY BEFORE PAYMENT =====
-    const availability = await checkAvailability({
-      startDate: start,
-      endDate: end,
-      items
-    });
-      
-    if (!availability.available) {
-      const message = availability.conflicts
-        .map(c => `${c.item}: requested ${c.requested}, available ${c.available}`)
-        .join("\n");
+      // ===== PAYMENT TOTAL =====
+      let total = Number(
+        document.getElementById("orderTotal").textContent || 0
+      );
 
-      alert("Some items are not available:\n\n" + message);
-      return;
-    }
+      const deliveryFee = total < 29 ? 25 : 0;
+      total += deliveryFee;
 
-    // ===== PAYMENT TOTAL =====
-    let total = Number(document.getElementById("orderTotal").textContent || 0);
-    const deliveryFee = total < 29 ? 25 : 0;
-    total += deliveryFee;
-
-    if (!total || total <= 0) {
-      alert("Could not calculate order total. Please contact support.");
-      return;
-    }
-
-    // ===== PAYPAL PAYMENT =====
-    const paypalContainer = document.getElementById("paypal-modal-container");
-    paypalContainer.innerHTML = "";
-
-    document.getElementById("modalTotal").textContent = total.toFixed(2);
-    document.getElementById("depositModal").style.display = "flex";
-
-    paypal.Buttons({
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: total.toFixed(2)
-            }
-          }]
-        });
-      },
-
-      onApprove: async function(data, actions) {
-        const details = await actions.order.capture();
-
-        console.log("PayPal payment successful:", details);
-
-        // Re-check availability after payment, before creating Airtable records
-        const finalAvailability = await checkAvailability({
-          startDate: start,
-          endDate: end,
-          items
-        });
-
-        if (!finalAvailability.available) {
-          alert("Payment was successful, but availability changed before the reservation could be created. Please contact support.");
-          return;
-        }
-
-        // ===== CREATE RESERVATION AFTER PAYMENT =====
-        const reservation = await createReservation({
-          "Customer Name": name,
-          "Email": email,
-          "Phone": phone,
-          "Drop Off Address": DOA,
-          "Pick Up Address": POA,
-          "Notes": notes,
-          "Invoice Paid": true,
-          "Delivery Fee": deliveryFee
-        });
-
-        console.log("reservation response:", reservation);
-
-        const reservationId = reservation.id;
-
-        if (!reservationId) {
-          alert("Payment was successful, but reservation creation failed. Please contact support.");
-          console.error("Invalid reservation response:", reservation);
-          return;
-        }
-
-        // ===== CREATE BOOKINGS AFTER PAYMENT =====
-        let successCount = 0;
-
-        for (let item of items) {
-          if (item.qty > 0) {
-            try {
-              const booking = await createBooking({
-                "Tote Type": [toteMap[item.name]],
-                "Number Reserved": item.qty,
-                "Start Date Time": start,
-                "End Date Time": end,
-                "Reservation ID": [reservationId]
-              });
-
-              console.log("booking response:", item.name, booking);
-              successCount++;
-
-            } catch (err) {
-              console.error("booking failed:", item.name, err);
-            }
-          }
-        }
-
-        if (successCount === 0) {
-          alert("Payment was successful, but no bookings were created. Please contact support.");
-          return;
-        }
-
-        alert("Payment successful! Reservation confirmed.");
-      },
-
-      onError: function(err) {
-        console.error("PayPal error:", err);
-        alert("Payment failed. Please try again or contact support.");
+      if (!total || total <= 0) {
+        alert("Could not calculate order total. Please contact support.");
+        return;
       }
 
-    }).render("#paypal-modal-container");
-  });
+      pendingCheckout = {
+        name,
+        email,
+        phone,
+        start,
+        end,
+        pickupAddress,
+        dropoffAddress,
+        notes,
+        items,
+        deliveryFee,
+        total
+      };
 
+      document.getElementById("modalTotal").textContent = total.toFixed(2);
+      document.getElementById("depositModal").style.display = "flex";
+    } catch (error) {
+      console.error("Could not prepare checkout:", error);
+      alert("Checkout could not be prepared. Please try again.");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Review & Pay";
+    }
+  });
 });
