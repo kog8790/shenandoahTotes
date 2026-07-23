@@ -339,6 +339,61 @@ document.addEventListener("DOMContentLoaded", async () => {
 let pendingCheckout = null;
 
 const paypalContainer = document.getElementById("paypal-modal-container");
+const discountCodeInput = document.getElementById("discountCode");
+const discountMessage = document.getElementById("discountMessage");
+const applyDiscountButton = document.getElementById("applyDiscountBtn");
+
+applyDiscountButton.addEventListener("click", async () => {
+  if (!pendingCheckout) {
+    discountMessage.textContent =
+      "Please restart checkout before applying a discount.";
+    return;
+  }
+
+  const discountCode = discountCodeInput.value.trim();
+
+  if (!discountCode) {
+    discountMessage.textContent = "Enter a discount code.";
+    discountCodeInput.focus();
+    return;
+  }
+
+  applyDiscountButton.disabled = true;
+  applyDiscountButton.textContent = "Applying…";
+  discountMessage.textContent = "";
+
+  try {
+    const pricing = await calculatePricing({
+      selectedPackage: pendingCheckout.selectedPackage,
+      items: pendingCheckout.items,
+      discountCode
+    });
+
+    if (!pricing.discountApplied) {
+      discountMessage.textContent =
+        pricing.discountMessage || "Discount code is invalid.";
+      return;
+    }
+
+    pendingCheckout.deliveryFee = pricing.deliveryFee;
+    pendingCheckout.total = pricing.total;
+    pendingCheckout.pricing = pricing;
+    pendingCheckout.discountCode = discountCode;
+
+    document.getElementById("modalTotal").textContent =
+      pricing.total.toFixed(2);
+
+    discountMessage.textContent =
+      pricing.discountMessage || "Discount code applied.";
+  } catch (error) {
+    console.error("Could not apply discount:", error);
+    discountMessage.textContent =
+      "Discount could not be applied. Please try again.";
+  } finally {
+    applyDiscountButton.disabled = false;
+    applyDiscountButton.textContent = "Apply";
+  }
+});
 
 paypal.Buttons({
   createOrder(data, actions) {
@@ -570,35 +625,15 @@ document
       }
 
       // ===== AUTHORITATIVE PRICING =====
-      const discountCodeInput = document.getElementById("discountCode");
-      const discountMessage = document.getElementById("discountMessage");
-
-      const discountCode = discountCodeInput.value.trim();
-
-      discountMessage.textContent = "";
-
       const pricing = await calculatePricing({
         selectedPackage,
         items,
-        discountCode
+        discountCode: ""
       });
-
-      if (discountCode && !pricing.discountApplied) {
-        discountMessage.textContent =
-          pricing.discountMessage || "Discount code is invalid.";
-
-        discountCodeInput.focus();
-        return;
-      }
 
       if (!pricing.total || pricing.total <= 0) {
         alert("Could not calculate order total. Please contact support.");
         return;
-      }
-
-      if (pricing.discountApplied) {
-        discountMessage.textContent =
-          pricing.discountMessage || "Discount code applied.";
       }
 
       pendingCheckout = {
@@ -611,13 +646,19 @@ document
         dropoffAddress,
         notes,
         items,
+        selectedPackage,
         deliveryFee: pricing.deliveryFee,
         total: pricing.total,
         pricing,
-        discountCode
+        discountCode: ""
       };
 
-      document.getElementById("modalTotal").textContent = pricing.total.toFixed(2);
+      document.getElementById("discountCode").value = "";
+      document.getElementById("discountMessage").textContent = "";
+
+      document.getElementById("modalTotal").textContent =
+        pricing.total.toFixed(2);
+
       document.getElementById("depositModal").style.display = "flex";
     } catch (error) {
       console.error("Could not prepare checkout:", error);
