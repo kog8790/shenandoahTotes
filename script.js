@@ -341,9 +341,8 @@ let pendingCheckout = null;
 const paypalContainer = document.getElementById("paypal-modal-container");
 const discountCodeInput = document.getElementById("discountCode");
 const discountMessage = document.getElementById("discountMessage");
-const applyDiscountButton = document.getElementById("applyDiscountBtn");
 
-applyDiscountButton.addEventListener("click", async () => {
+async function applyModalDiscount() {
   if (!pendingCheckout) {
     discountMessage.textContent =
       "Please restart checkout before applying a discount.";
@@ -352,15 +351,10 @@ applyDiscountButton.addEventListener("click", async () => {
 
   const discountCode = discountCodeInput.value.trim();
 
-  if (!discountCode) {
-    discountMessage.textContent = "Enter a discount code.";
-    discountCodeInput.focus();
-    return;
-  }
-
-  applyDiscountButton.disabled = true;
-  applyDiscountButton.textContent = "Applying…";
-  discountMessage.textContent = "";
+  discountCodeInput.disabled = true;
+  discountMessage.textContent = discountCode
+    ? "Checking discount…"
+    : "Restoring regular price…";
 
   try {
     const pricing = await calculatePricing({
@@ -369,30 +363,48 @@ applyDiscountButton.addEventListener("click", async () => {
       discountCode
     });
 
-    if (!pricing.discountApplied) {
-      discountMessage.textContent =
-        pricing.discountMessage || "Discount code is invalid.";
-      return;
-    }
-
     pendingCheckout.deliveryFee = pricing.deliveryFee;
     pendingCheckout.total = pricing.total;
     pendingCheckout.pricing = pricing;
-    pendingCheckout.discountCode = discountCode;
+    pendingCheckout.discountCode = pricing.discountApplied
+      ? discountCode
+      : "";
 
     document.getElementById("modalTotal").textContent =
       pricing.total.toFixed(2);
 
-    discountMessage.textContent =
-      pricing.discountMessage || "Discount code applied.";
+    if (!discountCode) {
+      discountMessage.textContent = "";
+      return;
+    }
+
+    discountMessage.textContent = pricing.discountApplied
+      ? pricing.discountMessage || "Discount code applied."
+      : pricing.discountMessage || "Discount code is invalid.";
   } catch (error) {
     console.error("Could not apply discount:", error);
     discountMessage.textContent =
       "Discount could not be applied. Please try again.";
   } finally {
-    applyDiscountButton.disabled = false;
-    applyDiscountButton.textContent = "Apply";
+    discountCodeInput.disabled = false;
   }
+}
+
+discountCodeInput.addEventListener("input", () => {
+  discountMessage.textContent = "";
+});
+
+discountCodeInput.addEventListener("keydown", event => {
+  if (event.key !== "Enter") {
+    return;
+  }
+
+  event.preventDefault();
+  applyModalDiscount();
+});
+
+discountCodeInput.addEventListener("blur", () => {
+  applyModalDiscount();
 });
 
 paypal.Buttons({
