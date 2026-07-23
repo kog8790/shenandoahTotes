@@ -873,6 +873,8 @@ h1 span,
   position: relative;
   width: 90%;
   max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
   padding: 30px;
   background: white;
   border-radius: 18px;
