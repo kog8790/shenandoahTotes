@@ -89,6 +89,24 @@ async function getInventory() {
   return await response.json();
 }
 
+async function calculatePricing(data) {
+  const response = await fetch("/.netlify/functions/calculate-pricing", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || !result.success) {
+    throw new Error(result.error || "Could not calculate pricing.");
+  }
+
+  return result.pricing;
+}
+
 function populateQuantitySelect(selectId, maximum) {
   const select = document.getElementById(selectId);
 
@@ -551,17 +569,36 @@ document
         return;
       }
 
-      // ===== PAYMENT TOTAL =====
-      let total = Number(
-        document.getElementById("orderTotal").textContent || 0
-      );
+      // ===== AUTHORITATIVE PRICING =====
+      const discountCodeInput = document.getElementById("discountCode");
+      const discountMessage = document.getElementById("discountMessage");
 
-      const deliveryFee = total < 29 ? 25 : 0;
-      total += deliveryFee;
+      const discountCode = discountCodeInput.value.trim();
 
-      if (!total || total <= 0) {
+      discountMessage.textContent = "";
+
+      const pricing = await calculatePricing({
+        selectedPackage,
+        items,
+        discountCode
+      });
+
+      if (discountCode && !pricing.discountApplied) {
+        discountMessage.textContent =
+          pricing.discountMessage || "Discount code is invalid.";
+
+        discountCodeInput.focus();
+        return;
+      }
+
+      if (!pricing.total || pricing.total <= 0) {
         alert("Could not calculate order total. Please contact support.");
         return;
+      }
+
+      if (pricing.discountApplied) {
+        discountMessage.textContent =
+          pricing.discountMessage || "Discount code applied.";
       }
 
       pendingCheckout = {
@@ -574,11 +611,13 @@ document
         dropoffAddress,
         notes,
         items,
-        deliveryFee,
-        total
+        deliveryFee: pricing.deliveryFee,
+        total: pricing.total,
+        pricing,
+        discountCode
       };
 
-      document.getElementById("modalTotal").textContent = total.toFixed(2);
+      document.getElementById("modalTotal").textContent = pricing.total.toFixed(2);
       document.getElementById("depositModal").style.display = "flex";
     } catch (error) {
       console.error("Could not prepare checkout:", error);
