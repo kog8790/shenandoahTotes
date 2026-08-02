@@ -360,6 +360,8 @@ async function applyModalDiscount() {
     const pricing = await calculatePricing({
       selectedPackage: pendingCheckout.selectedPackage,
       items: pendingCheckout.items,
+      startDate: pendingCheckout.start,
+      endDate: pendingCheckout.end,
       discountCode
     });
 
@@ -640,6 +642,8 @@ document
       const pricing = await calculatePricing({
         selectedPackage,
         items,
+        startDate: start,
+        endDate: end,
         discountCode: ""
       });
 

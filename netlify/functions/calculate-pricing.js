@@ -13,6 +13,75 @@ const ITEM_PRICING = {
 
 const DELIVERY_FEE = 25;
 const FREE_DELIVERY_THRESHOLD = 29;
+const INCLUDED_RENTAL_DAYS = 7;
+const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+
+function parseDateOnly(value, fieldName) {
+  if (typeof value !== "string") {
+    throw new Error(`${fieldName} is required.`);
+  }
+
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+  if (!match) {
+    throw new Error(`${fieldName} must use YYYY-MM-DD format.`);
+  }
+
+  const [, year, month, day] = match;
+
+  const timestamp = Date.UTC(
+    Number(year),
+    Number(month) - 1,
+    Number(day)
+  );
+
+  const parsedDate = new Date(timestamp);
+
+  const isValidDate =
+    parsedDate.getUTCFullYear() === Number(year) &&
+    parsedDate.getUTCMonth() === Number(month) - 1 &&
+    parsedDate.getUTCDate() === Number(day);
+
+  if (!isValidDate) {
+    throw new Error(`${fieldName} is not a valid date.`);
+  }
+
+  return timestamp;
+}
+
+function calculateRentalDays(startDate, endDate) {
+  const startTimestamp = parseDateOnly(startDate, "startDate");
+  const endTimestamp = parseDateOnly(endDate, "endDate");
+
+  if (endTimestamp < startTimestamp) {
+    throw new Error("Pickup date cannot be before drop-off date.");
+  }
+
+  const elapsedDays =
+    (endTimestamp - startTimestamp) / MILLISECONDS_PER_DAY;
+
+  return Math.max(1, elapsedDays);
+}
+
+function applyRentalDuration(baseWeeklySubtotal, rentalDays) {
+  const additionalDays = Math.max(
+    0,
+    rentalDays - INCLUDED_RENTAL_DAYS
+  );
+
+  const dailyRate = baseWeeklySubtotal / INCLUDED_RENTAL_DAYS;
+
+  return {
+    baseWeeklySubtotal: roundCurrency(baseWeeklySubtotal),
+    dailyRate: roundCurrency(dailyRate),
+    includedDays: INCLUDED_RENTAL_DAYS,
+    additionalDays,
+    rentalDays,
+    subtotal: roundCurrency(
+      baseWeeklySubtotal + dailyRate * additionalDays
+    )
+  };
+}
 
 function createResponse(statusCode, body) {
   return {
@@ -200,16 +269,28 @@ export async function handler(event) {
         ? request.selectedPackage.trim().toLowerCase()
         : null;
 
-    const subtotal = roundCurrency(
+    const baseWeeklySubtotal = roundCurrency(
       calculateSubtotal(selectedPackage, request.items)
     );
 
-    if (subtotal <= 0) {
+    if (baseWeeklySubtotal <= 0) {
       return createResponse(400, {
         success: false,
         error: "At least one rental item must be selected."
       });
     }
+
+    const rentalDays = calculateRentalDays(
+      request.startDate,
+      request.endDate
+    );
+
+    const rentalPricing = applyRentalDuration(
+      baseWeeklySubtotal,
+      rentalDays
+    );
+
+    const subtotal = rentalPricing.subtotal;
 
     const deliveryFee =
       subtotal < FREE_DELIVERY_THRESHOLD
@@ -224,7 +305,14 @@ export async function handler(event) {
 
     return createResponse(200, {
       success: true,
-      pricing
+      pricing: {
+        ...pricing,
+        rentalDays: rentalPricing.rentalDays,
+        includedDays: rentalPricing.includedDays,
+        additionalDays: rentalPricing.additionalDays,
+        baseWeeklySubtotal: rentalPricing.baseWeeklySubtotal,
+        dailyRate: rentalPricing.dailyRate
+      }
     });
   } catch (error) {
     console.error("Pricing calculation failed:", error);
