@@ -131,7 +131,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
         minDate: "today",
-        disableMobile: true
+        disableMobile: true,
+        onChange: updateTotal
       });
 
       flatpickr("#endDate", {
@@ -139,7 +140,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
         minDate: "today",
-        disableMobile: true
+        disableMobile: true,
+        onChange: updateTotal
       });
     }
 
@@ -245,31 +247,122 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupAddressAutocomplete("pickupAddress", "pickupSuggestions");
 
   // ===== TOTAL / SUMMARY =====
-  function updateTotal() {
-    let total;
-  
-    if (selectedPackage && packagePricing[selectedPackage]) {
-      total = packagePricing[selectedPackage];
-    } else {
-      total =
-        (Number(document.getElementById("classicTotes").value) * 2.5) +
-        (Number(document.getElementById("wheeledTotes").value) * 9) +
-        (Number(document.getElementById("dollies").value) * 10) +
-        (Number(document.getElementById("mattressBags").value) * 5);
+  const INCLUDED_RENTAL_DAYS = 7;
+  const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+
+  function parseDisplayDate(value) {
+    if (typeof value !== "string") {
+      return null;
     }
-  
+
+    const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+    if (!match) {
+      return null;
+    }
+
+    const [, year, month, day] = match;
+
+    const timestamp = Date.UTC(
+      Number(year),
+      Number(month) - 1,
+      Number(day)
+    );
+
+    const parsedDate = new Date(timestamp);
+
+    const isValidDate =
+      parsedDate.getUTCFullYear() === Number(year) &&
+      parsedDate.getUTCMonth() === Number(month) - 1 &&
+      parsedDate.getUTCDate() === Number(day);
+
+    return isValidDate ? timestamp : null;
+  }
+
+  function calculateDisplayRentalDays(startDate, endDate) {
+    const startTimestamp = parseDisplayDate(startDate);
+    const endTimestamp = parseDisplayDate(endDate);
+
+    if (
+      startTimestamp === null ||
+      endTimestamp === null ||
+      endTimestamp < startTimestamp
+    ) {
+      return null;
+    }
+
+    const elapsedDays =
+      (endTimestamp - startTimestamp) / MILLISECONDS_PER_DAY;
+
+    return Math.max(1, elapsedDays);
+  }
+
+  function calculateDisplayBaseWeeklySubtotal() {
+    if (selectedPackage && packagePricing[selectedPackage] !== undefined) {
+      return packagePricing[selectedPackage];
+    }
+
+    return (
+      Number(document.getElementById("classicTotes").value || 0) * 2.5 +
+      Number(document.getElementById("wheeledTotes").value || 0) * 9 +
+      Number(document.getElementById("dollies").value || 0) * 10 +
+      Number(document.getElementById("mattressBags").value || 0) * 5
+    );
+  }
+
+  function updateTotal() {
+    const classicQuantity =
+      Number(document.getElementById("classicTotes").value || 0);
+
+    const wheeledQuantity =
+      Number(document.getElementById("wheeledTotes").value || 0);
+
+    const dollyQuantity =
+      Number(document.getElementById("dollies").value || 0);
+
+    const mattressQuantity =
+      Number(document.getElementById("mattressBags").value || 0);
+
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    const baseWeeklySubtotal = calculateDisplayBaseWeeklySubtotal();
+    const rentalDays = calculateDisplayRentalDays(startDate, endDate);
+
+    const additionalDays =
+      rentalDays === null
+        ? 0
+        : Math.max(0, rentalDays - INCLUDED_RENTAL_DAYS);
+
+    const dailyRate =
+      baseWeeklySubtotal / INCLUDED_RENTAL_DAYS;
+
+    const total =
+      baseWeeklySubtotal + dailyRate * additionalDays;
+
+    const durationSummary =
+      rentalDays === null
+        ? ""
+        : `<br>Rental: ${rentalDays} day${rentalDays === 1 ? "" : "s"}`;
+
     const summaryHtml = `
-      Classic: ${document.getElementById("classicTotes").value}<br>
-      Wheeled: ${document.getElementById("wheeledTotes").value}<br>
-      Dollies: ${document.getElementById("dollies").value}<br>
-      Mattress: ${document.getElementById("mattressBags").value}
+      Classic: ${classicQuantity}<br>
+      Wheeled: ${wheeledQuantity}<br>
+      Dollies: ${dollyQuantity}<br>
+      Mattress: ${mattressQuantity}${durationSummary}
     `;
 
-    document.getElementById("orderTotal").textContent = total.toFixed(2);
-    document.getElementById("summaryDetails").innerHTML = summaryHtml;
+    document.getElementById("orderTotal").textContent =
+      total.toFixed(2);
 
-    document.getElementById("liveOrderTotal").textContent = total.toFixed(2);
-    document.getElementById("liveSummaryDetails").innerHTML = summaryHtml;
+    document.getElementById("summaryDetails").innerHTML =
+      summaryHtml;
+
+    document.getElementById("liveOrderTotal").textContent =
+      total.toFixed(2);
+
+    document.getElementById("liveSummaryDetails").innerHTML =
+      summaryHtml;
   }
   
   // bind dropdown changes
