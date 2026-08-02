@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
-        minDate: "tomorrow",
+        minDate: tomorrow,
         disableMobile: true,
         onChange: updateTotal
       });
