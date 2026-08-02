@@ -124,6 +124,9 @@ function populateQuantitySelect(selectId, maximum) {
 
 // ===== MAIN =====
 document.addEventListener("DOMContentLoaded", async () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const dayAfterTomorrow = new Date();
   dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
     
