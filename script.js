@@ -126,9 +126,14 @@ function populateQuantitySelect(selectId, maximum) {
 document.addEventListener("DOMContentLoaded", async () => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
 
   const dayAfterTomorrow = new Date();
   dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+  dayAfterTomorrow.setHours(0, 0, 0, 0);
+
+  const INCLUDED_RENTAL_DAYS = 7;
+  const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
     
     if (typeof flatpickr === "function") {
       flatpickr("#startDate", {
@@ -252,8 +257,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupAddressAutocomplete("pickupAddress", "pickupSuggestions");
 
   // ===== TOTAL / SUMMARY =====
-  const INCLUDED_RENTAL_DAYS = 7;
-  const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
   function parseDisplayDate(value) {
     if (typeof value !== "string") {
