@@ -124,13 +124,15 @@ function populateQuantitySelect(selectId, maximum) {
 
 // ===== MAIN =====
 document.addEventListener("DOMContentLoaded", async () => {
+  const dayAfterTomorrow = new Date();
+  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
     
     if (typeof flatpickr === "function") {
       flatpickr("#startDate", {
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
-        minDate: "today",
+        minDate: "tomorrow",
         disableMobile: true,
         onChange: updateTotal
       });
@@ -139,7 +141,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
-        minDate: "today",
+        minDate: dayAfterTomorrow,
         disableMobile: true,
         onChange: updateTotal
       });
